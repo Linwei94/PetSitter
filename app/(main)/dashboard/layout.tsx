@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           return
         }
         setUserEmail(user.email || '')
-        const { data: profile } = await supabase.from('profiles').select('full_name').eq('id', user.id).single()
+        const { data: profile } = await supabase.from('profiles').select('full_name').eq('id', user.id).single() as { data: { full_name: string | null } | null, error: unknown }
         if (profile?.full_name) setUserName(profile.full_name)
       } catch {
         // Supabase 未配置时静默失败，保留演示数据
