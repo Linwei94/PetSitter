@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { ChevronLeft, CheckCircle2, Upload } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
-import { CITIES, SHANGHAI_DISTRICTS } from '@/lib/utils'
+import { SYDNEY_SUBURBS } from '@/lib/utils'
 
 const STEPS = ['基本信息', '居住环境', '服务设置', '提交认证']
 
@@ -21,7 +21,7 @@ export default function BecomeSitterPage() {
     title: '',
     description: '',
     yearsExperience: 0,
-    city: '上海',
+    city: '悉尼',
     district: '',
     // Step 1: Home
     homeType: 'apartment',
@@ -179,20 +179,12 @@ export default function BecomeSitterPage() {
                   </select>
                 </div>
                 <div>
-                  <label className={labelCls}>所在城市</label>
-                  <select value={form.city} onChange={e => update('city', e.target.value)} className={inputCls}>
-                    {CITIES.map(c => <option key={c}>{c}</option>)}
+                  <label className={labelCls}>所在区域 (Suburb)</label>
+                  <select value={form.district} onChange={e => update('district', e.target.value)} className={inputCls}>
+                    <option value="">请选择</option>
+                    {SYDNEY_SUBURBS.map(d => <option key={d}>{d}</option>)}
                   </select>
                 </div>
-                {form.city === '上海' && (
-                  <div>
-                    <label className={labelCls}>所在区域</label>
-                    <select value={form.district} onChange={e => update('district', e.target.value)} className={inputCls}>
-                      <option value="">请选择</option>
-                      {SHANGHAI_DISTRICTS.map(d => <option key={d}>{d}</option>)}
-                    </select>
-                  </div>
-                )}
               </div>
             </>
           )}
