@@ -7,6 +7,16 @@ import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
 import { CAT_BREEDS } from '@/lib/utils'
 
+// 移到组件外，避免 SWC 编译报错
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="card p-5">
+      <h2 className="font-bold text-gray-900 mb-4">{title}</h2>
+      <div className="space-y-4">{children}</div>
+    </div>
+  )
+}
+
 export default function AddPetPage() {
   const router = useRouter()
   const supabase = createClient()
@@ -73,15 +83,6 @@ export default function AddPetPage() {
     setSubmitting(false)
   }
 
-  const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-    <div className="card p-5">
-      <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-        {title}
-      </h2>
-      <div className="space-y-4">{children}</div>
-    </div>
-  )
-
   return (
     <div className="space-y-5">
       <button onClick={() => router.back()}
@@ -91,7 +92,6 @@ export default function AddPetPage() {
       <h1 className="text-xl font-bold text-gray-900">添加猫咪档案</h1>
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        {/* Basic info */}
         <Section title="🐱 基本信息">
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
@@ -168,14 +168,13 @@ export default function AddPetPage() {
           )}
         </Section>
 
-        {/* Health */}
         <Section title="🏥 健康状况">
           <div>
             <label className="label">健康问题 / 过敏史</label>
             <textarea value={form.medicalConditions}
               onChange={e => update('medicalConditions', e.target.value)}
               className="input-field min-h-[80px] resize-none"
-              placeholder="例如：有慢性肾病，需要吃肾处方粮；或填写"无特殊情况"" />
+              placeholder="例如：有慢性肾病，需要吃肾处方粮；或填写无特殊情况" />
           </div>
           <div>
             <label className="label">目前用药情况</label>
@@ -198,7 +197,6 @@ export default function AddPetPage() {
           </div>
         </Section>
 
-        {/* Daily routine */}
         <Section title="📋 日常习惯">
           <div>
             <label className="label">喂食时间安排</label>
