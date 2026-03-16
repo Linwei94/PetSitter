@@ -25,11 +25,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   useEffect(() => {
     const loadUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) { router.push('/auth/login'); return }
-      setUserEmail(user.email || '')
-      const { data: profile } = await supabase.from('profiles').select('full_name').eq('id', user.id).single()
-      if (profile?.full_name) setUserName(profile.full_name)
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) {
+          // Demo 模式：未连接 Supabase 时不跳转，直接展示演示界面
+          if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('placeholder')) return
+          router.push('/auth/login')
+          return
+        }
+        setUserEmail(user.email || '')
+        const { data: profile } = await supabase.from('profiles').select('full_name').eq('id', user.id).single()
+        if (profile?.full_name) setUserName(profile.full_name)
+      } catch {
+        // Supabase 未配置时静默失败，保留演示数据
+      }
     }
     loadUser()
   }, [])

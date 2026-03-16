@@ -46,10 +46,18 @@ export default function SitterDashboardPage() {
 
   useEffect(() => {
     const check = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) { router.push('/auth/login'); return }
-      const { data } = await supabase.from('sitters').select('id').eq('user_id', user.id).single()
-      setHasSitterProfile(!!data)
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) {
+          // Demo 模式：未登录时直接展示"成为铲屎官"界面
+          setHasSitterProfile(false)
+          return
+        }
+        const { data } = await supabase.from('sitters').select('id').eq('user_id', user.id).single()
+        setHasSitterProfile(!!data)
+      } catch {
+        setHasSitterProfile(false)
+      }
     }
     check()
   }, [])
