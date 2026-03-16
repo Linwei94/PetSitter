@@ -11,8 +11,8 @@ import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
 
 const MOCK_SITTER_STATS = {
-  totalEarnings: 3240,
-  thisMonthEarnings: 840,
+  totalEarnings: 1680,
+  thisMonthEarnings: 420,
   completedBookings: 28,
   rating: 4.95,
   reviewCount: 23,
@@ -25,13 +25,13 @@ const MOCK_PENDING = [
     id: 'r1', ownerName: '李小明', ownerAvatar: '李',
     service: '猫咪寄养', petName: '橘橘',
     startDate: '2024-12-22', endDate: '2024-12-28', nights: 6,
-    amount: 720, requestedAt: '30分钟前',
+    amount: 360, requestedAt: '30分钟前',
   },
   {
     id: 'r2', ownerName: '王芳', ownerAvatar: '王',
     service: '上门喂猫', petName: '雪球',
     startDate: '2024-12-20', endDate: '2024-12-23', nights: 3,
-    amount: 180, requestedAt: '2小时前',
+    amount: 90, requestedAt: '2小时前',
   },
 ]
 
@@ -40,8 +40,8 @@ export default function SitterDashboardPage() {
   const supabase = createClient()
   const [hasSitterProfile, setHasSitterProfile] = useState<boolean | null>(null)
   const [services, setServices] = useState([
-    { type: 'cat_boarding', label: '猫咪寄养', price: 120, isActive: true, icon: '🏠' },
-    { type: 'cat_home_feeding', label: '上门喂猫', price: 60, isActive: true, icon: '🚪' },
+    { type: 'cat_boarding', label: '猫咪寄养', price: 60, isActive: true, icon: '🏠' },
+    { type: 'cat_home_feeding', label: '上门喂猫', price: 30, isActive: true, icon: '🚪' },
   ])
 
   useEffect(() => {

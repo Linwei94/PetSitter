@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Plus, Edit2, Trash2, CheckCircle2, XCircle } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 const MOCK_PETS = [
   {
@@ -92,7 +93,12 @@ export default function PetsPage() {
                     className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
                     <Edit2 size={15} />
                   </Link>
-                  <button onClick={e => { e.stopPropagation(); setPets(prev => prev.filter(p => p.id !== pet.id)) }}
+                  <button onClick={e => {
+                    e.stopPropagation()
+                    if (!window.confirm(`确认删除 ${pet.name} 的档案？此操作不可恢复。`)) return
+                    setPets(prev => prev.filter(p => p.id !== pet.id))
+                    toast.success(`已删除 ${pet.name} 的档案`)
+                  }}
                     className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors">
                     <Trash2 size={15} />
                   </button>
