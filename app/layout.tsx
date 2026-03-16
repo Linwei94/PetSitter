@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { Toaster } from 'react-hot-toast'
+import ToasterProvider from '@/components/ToasterProvider'
 
 export const metadata: Metadata = {
   title: {
@@ -32,31 +32,7 @@ export default function RootLayout({
     <html lang="zh-CN">
       <body>
         {children}
-        <Toaster
-          position="top-center"
-          toastOptions={{
-            duration: 3000,
-            style: {
-              background: '#1e293b',
-              color: '#fff',
-              borderRadius: '12px',
-              fontSize: '14px',
-              fontFamily: "'PingFang SC', 'Microsoft YaHei', sans-serif",
-            },
-            success: {
-              iconTheme: {
-                primary: '#10b981',
-                secondary: '#fff',
-              },
-            },
-            error: {
-              iconTheme: {
-                primary: '#ef4444',
-                secondary: '#fff',
-              },
-            },
-          }}
-        />
+        <ToasterProvider />
       </body>
     </html>
   )
