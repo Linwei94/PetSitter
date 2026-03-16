@@ -3,9 +3,22 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowLeft, CheckCircle2 } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowLeft, CheckCircle2, Check, X } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
+
+function getPasswordStrength(pwd: string): { score: number; label: string; color: string } {
+  if (!pwd) return { score: 0, label: '', color: '' }
+  let score = 0
+  if (pwd.length >= 8) score++
+  if (/[A-Z]/.test(pwd)) score++
+  if (/[0-9]/.test(pwd)) score++
+  if (/[^A-Za-z0-9]/.test(pwd)) score++
+  if (score <= 1) return { score, label: '强度：弱', color: 'bg-red-400' }
+  if (score === 2) return { score, label: '强度：一般', color: 'bg-yellow-400' }
+  if (score === 3) return { score, label: '强度：良好', color: 'bg-blue-400' }
+  return { score, label: '强度：强', color: 'bg-green-500' }
+}
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -17,6 +30,7 @@ export default function RegisterPage() {
     agreeTerms: false,
   })
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const [loading, setLoading] = useState(false)
   const [step, setStep] = useState<'form' | 'verify'>('form')
   const router = useRouter()
@@ -25,10 +39,20 @@ export default function RegisterPage() {
   const update = (key: string, value: string | boolean) =>
     setFormData(prev => ({ ...prev, [key]: value }))
 
+  const strength = getPasswordStrength(formData.password)
+
+  const pwdRules = [
+    { label: '至少8位字符', ok: formData.password.length >= 8 },
+    { label: '包含大写字母 (A-Z)', ok: /[A-Z]/.test(formData.password) },
+    { label: '包含数字 (0-9)', ok: /[0-9]/.test(formData.password) },
+  ]
+
   const validateForm = () => {
     if (!formData.fullName.trim()) return '请输入您的姓名'
-    if (!formData.email.includes('@')) return '请输入有效的邮箱地址'
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return '请输入有效的邮箱地址'
     if (formData.password.length < 8) return '密码至少需要8位字符'
+    if (!/[A-Z]/.test(formData.password)) return '密码必须包含至少一个大写字母'
+    if (!/[0-9]/.test(formData.password)) return '密码必须包含至少一个数字'
     if (formData.password !== formData.confirmPassword) return '两次输入的密码不一致'
     if (!formData.agreeTerms) return '请同意服务条款和隐私政策'
     return null
@@ -148,7 +172,7 @@ export default function RegisterPage() {
                   value={formData.phone}
                   onChange={e => update('phone', e.target.value)}
                   className="input-field pl-11"
-                  placeholder="13800138000"
+                  placeholder="04XX XXX XXX"
                 />
               </div>
             </div>
@@ -163,15 +187,45 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={e => update('password', e.target.value)}
                   className="input-field pl-11 pr-11"
-                  placeholder="至少8位字符"
+                  placeholder="至少8位，含大写字母和数字"
                   required
-                  minLength={8}
                 />
                 <button type="button" onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+
+              {/* Strength bar */}
+              {formData.password && (
+                <div className="mt-2 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-300 ${strength.color}`}
+                        style={{ width: `${(strength.score / 4) * 100}%` }}
+                      />
+                    </div>
+                    <span className={`text-xs font-medium ${
+                      strength.score <= 1 ? 'text-red-500' :
+                      strength.score === 2 ? 'text-yellow-600' :
+                      strength.score === 3 ? 'text-blue-600' : 'text-green-600'
+                    }`}>{strength.label}</span>
+                  </div>
+                  <div className="space-y-1">
+                    {pwdRules.map(rule => (
+                      <div key={rule.label} className="flex items-center gap-1.5">
+                        {rule.ok
+                          ? <Check size={12} className="text-green-500 flex-shrink-0" />
+                          : <X size={12} className="text-gray-300 flex-shrink-0" />}
+                        <span className={`text-xs ${rule.ok ? 'text-green-600' : 'text-gray-400'}`}>
+                          {rule.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Confirm Password */}
@@ -180,20 +234,33 @@ export default function RegisterPage() {
               <div className="relative">
                 <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
-                  type="password"
+                  type={showConfirm ? 'text' : 'password'}
                   value={formData.confirmPassword}
                   onChange={e => update('confirmPassword', e.target.value)}
-                  className={`input-field pl-11 ${
+                  className={`input-field pl-11 pr-11 ${
                     formData.confirmPassword && formData.password !== formData.confirmPassword
                       ? 'border-red-300 focus:ring-red-400'
+                      : formData.confirmPassword && formData.password === formData.confirmPassword
+                      ? 'border-green-300 focus:ring-green-400'
                       : ''
                   }`}
                   placeholder="再次输入密码"
                   required
                 />
+                <button type="button" onClick={() => setShowConfirm(!showConfirm)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                  {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
               {formData.confirmPassword && formData.password !== formData.confirmPassword && (
-                <p className="text-red-500 text-xs mt-1">两次密码不一致</p>
+                <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                  <X size={12} /> 两次密码不一致
+                </p>
+              )}
+              {formData.confirmPassword && formData.password === formData.confirmPassword && (
+                <p className="text-green-500 text-xs mt-1 flex items-center gap-1">
+                  <Check size={12} /> 密码一致
+                </p>
               )}
             </div>
 

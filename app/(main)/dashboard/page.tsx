@@ -10,13 +10,13 @@ const MOCK_RECENT_BOOKINGS = [
     id: 'b1', bookingNumber: 'BK20241201ABC',
     sitterName: '林晓雨', service: '猫咪寄养',
     startDate: '2024-12-20', endDate: '2024-12-25',
-    status: 'confirmed', amount: 600, petNames: ['胖虎', '小橘'],
+    status: 'confirmed', amount: 300, petNames: ['胖虎', '小橘'],
   },
   {
     id: 'b2', bookingNumber: 'BK20241115XYZ',
     sitterName: '张美玲', service: '上门喂猫',
     startDate: '2024-11-15', endDate: '2024-11-18',
-    status: 'completed', amount: 150, petNames: ['胖虎'],
+    status: 'completed', amount: 75, petNames: ['胖虎'],
   },
 ]
 
@@ -123,7 +123,7 @@ export default function DashboardPage() {
                   {b.service} · {b.startDate} → {b.endDate} · {b.petNames.join('、')}
                 </p>
               </div>
-              <p className="font-bold text-gray-900 text-sm flex-shrink-0">¥{b.amount}</p>
+              <p className="font-bold text-gray-900 text-sm flex-shrink-0">A${b.amount}</p>
             </Link>
           ))}
         </div>

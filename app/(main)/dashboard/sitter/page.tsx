@@ -11,8 +11,8 @@ import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
 
 const MOCK_SITTER_STATS = {
-  totalEarnings: 3240,
-  thisMonthEarnings: 840,
+  totalEarnings: 1680,
+  thisMonthEarnings: 420,
   completedBookings: 28,
   rating: 4.95,
   reviewCount: 23,
@@ -25,13 +25,13 @@ const MOCK_PENDING = [
     id: 'r1', ownerName: '李小明', ownerAvatar: '李',
     service: '猫咪寄养', petName: '橘橘',
     startDate: '2024-12-22', endDate: '2024-12-28', nights: 6,
-    amount: 720, requestedAt: '30分钟前',
+    amount: 360, requestedAt: '30分钟前',
   },
   {
     id: 'r2', ownerName: '王芳', ownerAvatar: '王',
     service: '上门喂猫', petName: '雪球',
     startDate: '2024-12-20', endDate: '2024-12-23', nights: 3,
-    amount: 180, requestedAt: '2小时前',
+    amount: 90, requestedAt: '2小时前',
   },
 ]
 
@@ -40,8 +40,8 @@ export default function SitterDashboardPage() {
   const supabase = createClient()
   const [hasSitterProfile, setHasSitterProfile] = useState<boolean | null>(null)
   const [services, setServices] = useState([
-    { type: 'cat_boarding', label: '猫咪寄养', price: 120, isActive: true, icon: '🏠' },
-    { type: 'cat_home_feeding', label: '上门喂猫', price: 60, isActive: true, icon: '🚪' },
+    { type: 'cat_boarding', label: '猫咪寄养', price: 60, isActive: true, icon: '🏠' },
+    { type: 'cat_home_feeding', label: '上门喂猫', price: 30, isActive: true, icon: '🚪' },
   ])
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function SitterDashboardPage() {
           <h2 className="text-xl font-bold text-gray-900 mb-2">成为专业铲屎官，开始赚钱</h2>
           <p className="text-gray-500 text-sm mb-6 max-w-md mx-auto">
             加入5000+认证铲屎官行列，用您的爱猫经验帮助更多猫咪主人，同时增加收入。
-            平均铲屎官月收入 ¥2,000+。
+            平均铲屎官月收入 A$2,000+。
           </p>
           <div className="grid sm:grid-cols-3 gap-4 mb-8">
             {[
@@ -131,7 +131,7 @@ export default function SitterDashboardPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: '本月收入', value: `¥${MOCK_SITTER_STATS.thisMonthEarnings}`, icon: DollarSign, color: 'text-green-600', bg: 'bg-green-50' },
+          { label: '本月收入', value: `A$${MOCK_SITTER_STATS.thisMonthEarnings}`, icon: DollarSign, color: 'text-green-600', bg: 'bg-green-50' },
           { label: '完成订单', value: `${MOCK_SITTER_STATS.completedBookings}次`, icon: Calendar, color: 'text-blue-600', bg: 'bg-blue-50' },
           { label: '平均评分', value: MOCK_SITTER_STATS.rating.toString(), icon: Star, color: 'text-yellow-500', bg: 'bg-yellow-50' },
           { label: '响应率', value: `${MOCK_SITTER_STATS.responseRate}%`, icon: TrendingUp, color: 'text-brand-600', bg: 'bg-brand-50' },
@@ -168,7 +168,7 @@ export default function SitterDashboardPage() {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-gray-900">¥{req.amount}</p>
+                    <p className="font-bold text-gray-900">A${req.amount}</p>
                     <p className="text-xs text-gray-400">{req.requestedAt}</p>
                   </div>
                 </div>
@@ -202,7 +202,7 @@ export default function SitterDashboardPage() {
               <span className="text-2xl">{s.icon}</span>
               <div className="flex-1">
                 <p className="font-semibold text-gray-900">{s.label}</p>
-                <p className="text-sm text-gray-500">¥{s.price}{s.type === 'cat_boarding' ? '/晚' : '/次'}</p>
+                <p className="text-sm text-gray-500">A${s.price}{s.type === 'cat_boarding' ? '/晚' : '/次'}</p>
               </div>
               <button onClick={() => toggleService(s.type)}
                 className={`flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg transition-colors ${
@@ -225,11 +225,11 @@ export default function SitterDashboardPage() {
         <div className="grid sm:grid-cols-2 gap-4">
           <div className="bg-green-50 rounded-xl p-4">
             <p className="text-sm text-green-700 mb-1">累计收入</p>
-            <p className="text-3xl font-bold text-green-800">¥{MOCK_SITTER_STATS.totalEarnings}</p>
+            <p className="text-3xl font-bold text-green-800">A${MOCK_SITTER_STATS.totalEarnings}</p>
           </div>
           <div className="bg-brand-50 rounded-xl p-4">
             <p className="text-sm text-brand-700 mb-1">本月收入</p>
-            <p className="text-3xl font-bold text-brand-800">¥{MOCK_SITTER_STATS.thisMonthEarnings}</p>
+            <p className="text-3xl font-bold text-brand-800">A${MOCK_SITTER_STATS.thisMonthEarnings}</p>
           </div>
         </div>
         <p className="text-xs text-gray-400 mt-3">平台手续费10%已扣除，收入在服务完成后7个工作日内到账</p>

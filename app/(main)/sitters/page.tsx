@@ -238,7 +238,7 @@ function SittersContent() {
         <div className="bg-white rounded-2xl border border-gray-200 p-5 mb-6 shadow-sm">
           <div className="flex flex-wrap gap-6 items-center">
             <div>
-              <label className="label text-sm">最高价格: ¥{maxPrice}/{service === 'cat_home_feeding' ? '次' : '晚'}</label>
+              <label className="label text-sm">最高价格: A${maxPrice}/{service === 'cat_home_feeding' ? '次' : '晚'}</label>
               <input
                 type="range"
                 min={30}

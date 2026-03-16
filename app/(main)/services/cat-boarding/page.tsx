@@ -62,7 +62,7 @@ export default function CatBoardingPage() {
               提供寄养服务
             </Link>
           </div>
-          <p className="text-sm text-gray-500 mt-4">起价 ¥80/晚 · 5,000+ 认证铲屎官</p>
+          <p className="text-sm text-gray-500 mt-4">起价 A$80/晚 · 5,000+ 认证铲屎官</p>
         </div>
       </section>
 

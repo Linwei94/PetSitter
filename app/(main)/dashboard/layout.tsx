@@ -16,11 +16,21 @@ const navItems = [
   { href: '/dashboard/settings', label: '账户设置', icon: Settings },
 ]
 
+// Bottom nav shows a subset (most used items)
+const bottomNavItems = [
+  { href: '/dashboard', label: '总览', icon: LayoutDashboard, exact: true },
+  { href: '/dashboard/bookings', label: '预订', icon: Calendar },
+  { href: '/dashboard/messages', label: '消息', icon: MessageSquare },
+  { href: '/dashboard/pets', label: '猫咪', icon: Heart },
+  { href: '/dashboard/settings', label: '设置', icon: Settings },
+]
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
   const [userName, setUserName] = useState('用户')
   const [userEmail, setUserEmail] = useState('')
+  const [unreadMessages, setUnreadMessages] = useState(2)
   const supabase = createClient()
 
   useEffect(() => {
@@ -28,7 +38,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       try {
         const { data: { user } } = await supabase.auth.getUser()
         if (!user) {
-          // Demo 模式：未连接 Supabase 时不跳转，直接展示演示界面
           if (process.env.NEXT_PUBLIC_SUPABASE_URL?.includes('placeholder')) return
           router.push('/auth/login')
           return
@@ -53,18 +62,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8">
         <div className="grid lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="card p-5 mb-4">
+          {/* Sidebar — desktop only */}
+          <div className="lg:col-span-1 hidden lg:block">
+            <div className="card p-5 mb-4 sticky top-20">
               <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
                 <div className="w-12 h-12 bg-brand-500 rounded-2xl flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
                   {userName[0]}
                 </div>
                 <div className="min-w-0">
                   <p className="font-bold text-gray-900 truncate">{userName}</p>
-                  <p className="text-xs text-gray-500 truncate">{userEmail}</p>
+                  <p className="text-xs text-gray-500 truncate">{userEmail || '演示账户'}</p>
                 </div>
               </div>
               <nav className="space-y-1">
@@ -78,15 +87,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     )}>
                     <item.icon size={16} />
                     {item.label}
-                    {isActive(item) && <ChevronRight size={14} className="ml-auto" />}
+                    {item.href === '/dashboard/messages' && unreadMessages > 0 && (
+                      <span className="ml-auto w-4 h-4 bg-brand-500 rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                        {unreadMessages}
+                      </span>
+                    )}
+                    {isActive(item) && item.href !== '/dashboard/messages' && (
+                      <ChevronRight size={14} className="ml-auto" />
+                    )}
                   </Link>
                 ))}
               </nav>
+              <button onClick={handleSignOut}
+                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-colors mt-3 pt-3 border-t border-gray-100">
+                <LogOut size={16} /> 退出登录
+              </button>
             </div>
-            <button onClick={handleSignOut}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-colors">
-              <LogOut size={16} /> 退出登录
-            </button>
           </div>
 
           {/* Main content */}
@@ -95,6 +111,37 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </div>
       </div>
+
+      {/* Mobile bottom navigation */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40 safe-area-inset-bottom">
+        <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
+          {bottomNavItems.map(item => {
+            const active = item.exact ? pathname === item.href : pathname.startsWith(item.href)
+            return (
+              <Link key={item.href} href={item.href}
+                className={cn(
+                  'flex flex-col items-center gap-0.5 px-3 py-2 rounded-xl transition-colors relative',
+                  active ? 'text-brand-600' : 'text-gray-400'
+                )}>
+                <div className="relative">
+                  <item.icon size={20} />
+                  {item.href === '/dashboard/messages' && unreadMessages > 0 && (
+                    <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 rounded-full flex items-center justify-center text-white text-[8px] font-bold">
+                      {unreadMessages}
+                    </span>
+                  )}
+                </div>
+                <span className={`text-[10px] font-medium ${active ? 'text-brand-600' : 'text-gray-400'}`}>
+                  {item.label}
+                </span>
+                {active && (
+                  <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-8 h-0.5 bg-brand-500 rounded-full" />
+                )}
+              </Link>
+            )
+          })}
+        </div>
+      </nav>
     </div>
   )
 }

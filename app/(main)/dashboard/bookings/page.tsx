@@ -4,6 +4,7 @@ import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Star, MessageSquare, RefreshCw } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 const MOCK_BOOKINGS = [
   {
@@ -11,7 +12,7 @@ const MOCK_BOOKINGS = [
     sitterName: '林晓雨', sitterAvatar: 'L',
     service: 'cat_boarding', serviceLabel: '猫咪寄养',
     startDate: '2024-12-20', endDate: '2024-12-25',
-    status: 'confirmed', amount: 600, platformFee: 60,
+    status: 'confirmed', amount: 300, platformFee: 30,
     petNames: ['胖虎', '小橘'], nights: 5,
     reviewed: false,
   },
@@ -20,7 +21,7 @@ const MOCK_BOOKINGS = [
     sitterName: '张美玲', sitterAvatar: 'Z',
     service: 'cat_home_feeding', serviceLabel: '上门喂猫',
     startDate: '2024-11-15', endDate: '2024-11-18',
-    status: 'completed', amount: 150, platformFee: 15,
+    status: 'completed', amount: 75, platformFee: 8,
     petNames: ['胖虎'], nights: 3,
     reviewed: true,
   },
@@ -29,7 +30,7 @@ const MOCK_BOOKINGS = [
     sitterName: '王建辉', sitterAvatar: 'W',
     service: 'cat_boarding', serviceLabel: '猫咪寄养',
     startDate: '2024-10-01', endDate: '2024-10-07',
-    status: 'completed', amount: 900, platformFee: 90,
+    status: 'completed', amount: 450, platformFee: 45,
     petNames: ['胖虎'], nights: 6,
     reviewed: true,
   },
@@ -38,7 +39,7 @@ const MOCK_BOOKINGS = [
     sitterName: '陈思远', sitterAvatar: 'C',
     service: 'cat_boarding', serviceLabel: '猫咪寄养',
     startDate: '2024-12-05', endDate: '2024-12-08',
-    status: 'cancelled', amount: 300, platformFee: 0,
+    status: 'cancelled', amount: 165, platformFee: 0,
     petNames: ['小橘'], nights: 3,
     reviewed: false,
   },
@@ -59,8 +60,15 @@ function BookingsList() {
   const searchParams = useSearchParams()
   const success = searchParams.get('success')
   const [filter, setFilter] = useState('all')
+  const [bookings, setBookings] = useState(MOCK_BOOKINGS)
 
-  const filtered = MOCK_BOOKINGS.filter(b => {
+  const handleCancel = (id: string) => {
+    if (!window.confirm('确认取消此预订？取消后将按照退款政策处理。')) return
+    setBookings(prev => prev.map(b => b.id === id ? { ...b, status: 'cancelled' } : b))
+    toast.success('预订已取消')
+  }
+
+  const filtered = bookings.filter(b => {
     if (filter === 'all') return true
     if (filter === 'upcoming') return ['pending','confirmed','active'].includes(b.status)
     if (filter === 'completed') return b.status === 'completed'
@@ -136,8 +144,8 @@ function BookingsList() {
                   </p>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <p className="font-bold text-lg text-gray-900">¥{b.amount}</p>
-                  <p className="text-xs text-gray-400">含服务费 ¥{b.platformFee}</p>
+                  <p className="font-bold text-lg text-gray-900">A${b.amount}</p>
+                  <p className="text-xs text-gray-400">含服务费 A${b.platformFee}</p>
                 </div>
               </div>
 
@@ -161,7 +169,9 @@ function BookingsList() {
                   </Link>
                 )}
                 {b.status === 'pending' && (
-                  <button className="flex items-center gap-1.5 text-sm font-medium text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition-colors">
+                  <button
+                    onClick={() => handleCancel(b.id)}
+                    className="flex items-center gap-1.5 text-sm font-medium text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition-colors">
                     取消预订
                   </button>
                 )}

@@ -13,9 +13,9 @@ const MOCK_PETS = [
 ]
 
 const SITTER_INFO: Record<string, any> = {
-  '1': { name: '林晓雨', priceBoarding: 120, priceFeeding: 60, additionalCatPrice: 40 },
-  '2': { name: '王建辉', priceBoarding: 150, priceFeeding: undefined, additionalCatPrice: 50 },
-  '3': { name: '张美玲', priceBoarding: 90, priceFeeding: 50, additionalCatPrice: 30 },
+  '1': { name: '林晓雨', priceBoarding: 60, priceFeeding: 30, additionalCatPrice: 20 },
+  '2': { name: '王建辉', priceBoarding: 75, priceFeeding: undefined, additionalCatPrice: 25 },
+  '3': { name: '张美玲', priceBoarding: 50, priceFeeding: 25, additionalCatPrice: 18 },
 }
 
 function BookingNewContent() {
@@ -34,7 +34,7 @@ function BookingNewContent() {
   const [selectedPets, setSelectedPets] = useState<string[]>([])
   const [specialInstructions, setSpecialInstructions] = useState('')
   const [emergencyContact, setEmergencyContact] = useState('')
-  const [paymentMethod, setPaymentMethod] = useState('wechat')
+  const [paymentMethod, setPaymentMethod] = useState('payid')
   const [submitting, setSubmitting] = useState(false)
 
   const days = Math.max(1, (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24))
@@ -107,7 +107,7 @@ function BookingNewContent() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {/* Main content */}
-          <div className="md:col-span-2 space-y-5">
+          <div className="md:col-span-2 space-y-5 order-2 md:order-1">
             {/* Step 1: Select pets */}
             {step === 'pets' && (
               <div className="card p-6">
@@ -207,9 +207,9 @@ function BookingNewContent() {
                       <span>{MOCK_PETS.filter(p => selectedPets.includes(p.id)).map(p => p.name).join('、')}</span>
                     </div>
                     <div className="border-t border-gray-200 pt-2 mt-2 flex justify-between font-bold text-gray-900">
-                      <span>合计</span><span className="text-brand-600">¥{finalTotal}</span>
+                      <span>合计</span><span className="text-brand-600">A${finalTotal}</span>
                     </div>
-                    <p className="text-xs text-gray-400">平台服务费（10%）¥{platformFee} 已包含在内</p>
+                    <p className="text-xs text-gray-400">平台服务费（10%）A${platformFee} 已包含在内</p>
                   </div>
                 </div>
 
@@ -218,9 +218,10 @@ function BookingNewContent() {
                   <label className="label">支付方式</label>
                   <div className="space-y-2">
                     {[
+                      { value: 'payid', label: 'PayID / 银行转账', icon: '🏦' },
+                      { value: 'card', label: '信用卡 / 借记卡', icon: '💳' },
                       { value: 'wechat', label: '微信支付', icon: '💚' },
                       { value: 'alipay', label: '支付宝', icon: '💙' },
-                      { value: 'card', label: '银行卡', icon: '💳' },
                     ].map(method => (
                       <label key={method.value}
                         className={`flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition-colors ${
@@ -250,7 +251,7 @@ function BookingNewContent() {
                     className="btn-secondary flex-1 py-3">← 上一步</button>
                   <button onClick={handleSubmit} disabled={submitting}
                     className="btn-primary flex-1 py-3 disabled:opacity-60">
-                    {submitting ? '处理中...' : `支付 ¥${finalTotal}`}
+                    {submitting ? '处理中...' : `支付 A$${finalTotal}`}
                   </button>
                 </div>
               </div>
@@ -258,7 +259,7 @@ function BookingNewContent() {
           </div>
 
           {/* Sidebar: summary */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1 order-1 md:order-2">
             <div className="card p-5 sticky top-20">
               <h3 className="font-bold text-gray-900 mb-4 text-sm">预订摘要</h3>
               <div className="space-y-3 text-sm">
@@ -280,7 +281,7 @@ function BookingNewContent() {
                 </div>
                 <div className="border-t border-gray-100 pt-3 flex justify-between">
                   <span className="text-gray-500">合计</span>
-                  <span className="font-bold text-brand-600 text-base">¥{finalTotal}</span>
+                  <span className="font-bold text-brand-600 text-base">A${finalTotal}</span>
                 </div>
               </div>
             </div>

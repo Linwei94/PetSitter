@@ -80,7 +80,7 @@ export default function ServiceCards() {
                     <div>
                       <span className="text-xs text-gray-500">起价</span>
                       <div className={`text-2xl font-bold ${service.textColor}`}>
-                        ¥{service.priceFrom}
+                        A${service.priceFrom}
                         <span className="text-sm font-normal text-gray-500 ml-1">
                           {service.id === 'cat_boarding' ? '/晚' : '/次'}
                         </span>

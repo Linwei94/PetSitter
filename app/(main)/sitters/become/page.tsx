@@ -259,7 +259,7 @@ export default function BecomeSitterPage() {
                   </label>
                   {form.offersBoarding && (
                     <div>
-                      <label className={labelCls}>每晚价格（¥）</label>
+                      <label className={labelCls}>每晚价格（A$）</label>
                       <input type="number" min={30} max={500}
                         value={form.priceBoarding} onChange={e => update('priceBoarding', Number(e.target.value))}
                         className={inputCls} />
@@ -277,7 +277,7 @@ export default function BecomeSitterPage() {
                   </label>
                   {form.offersFeeding && (
                     <div>
-                      <label className={labelCls}>每次上门价格（¥）</label>
+                      <label className={labelCls}>每次上门价格（A$）</label>
                       <input type="number" min={20} max={300}
                         value={form.priceFeeding} onChange={e => update('priceFeeding', Number(e.target.value))}
                         className={inputCls} />
@@ -287,7 +287,7 @@ export default function BecomeSitterPage() {
 
                 {/* Additional cat price */}
                 <div>
-                  <label className={labelCls}>额外每只猫咪加价（¥）</label>
+                  <label className={labelCls}>额外每只猫咪加价（A$）</label>
                   <input type="number" min={0}
                     value={form.additionalCatPrice} onChange={e => update('additionalCatPrice', Number(e.target.value))}
                     className={inputCls} />

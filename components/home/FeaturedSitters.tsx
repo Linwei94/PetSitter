@@ -156,13 +156,13 @@ export default function FeaturedSitters() {
                     {sitter.services.includes('cat_boarding') && (
                       <div>
                         <p className="text-xs text-gray-400">寄养</p>
-                        <p className="font-bold text-gray-900">¥{sitter.priceBoarding}<span className="text-xs font-normal text-gray-500">/晚</span></p>
+                        <p className="font-bold text-gray-900">A${sitter.priceBoarding}<span className="text-xs font-normal text-gray-500">/晚</span></p>
                       </div>
                     )}
                     {sitter.services.includes('cat_home_feeding') && (
                       <div>
                         <p className="text-xs text-gray-400">上门</p>
-                        <p className="font-bold text-gray-900">¥{sitter.priceFeeding}<span className="text-xs font-normal text-gray-500">/次</span></p>
+                        <p className="font-bold text-gray-900">A${sitter.priceFeeding}<span className="text-xs font-normal text-gray-500">/次</span></p>
                       </div>
                     )}
                   </div>
