@@ -1,6 +1,6 @@
-# 🐱 喵管家 - 猫咪专业照护平台
+# 🐱 喵管家 - 悉尼华人猫咪照护平台
 
-中国领先的猫咪上门喂养、寄养预订平台，参考 MadPaws 设计，专为中国市场打造。
+专为悉尼华人社区打造的猫咪上门喂养、寄养预订平台，参考 MadPaws 设计，服务悉尼各华人聚居区（Chatswood、Hurstville、Burwood、Eastwood 等）。
 
 ## 功能特色
 
@@ -14,6 +14,12 @@
 - 🛡️ **资金托管** - 服务完成后才放款
 - 📱 **响应式设计** - 完美支持手机端
 
+## 覆盖区域
+
+服务悉尼各华人聚居区，包括：
+
+Chatswood · Hurstville · Burwood · Eastwood · Rhodes · Strathfield · Parramatta · Ashfield · Campsie · Kingsford · Randwick · Auburn · Blacktown · Haymarket · Kogarah · Rockdale · Lane Cove · North Sydney · Hornsby · Liverpool · Bankstown · Mascot · Zetland · Bondi · Surry Hills
+
 ## 技术栈
 
 - **前端**: Next.js 14 (App Router) + TypeScript + Tailwind CSS
@@ -25,7 +31,7 @@
 
 ### 1. 克隆项目
 ```bash
-git clone https://github.com/your-username/PetSitter.git
+git clone https://github.com/Linwei94/PetSitter.git
 cd PetSitter
 npm install
 ```
@@ -58,13 +64,11 @@ npm run build
 1. 在 GitHub 仓库 Settings → Secrets 中添加：
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `NEXT_PUBLIC_SITE_URL`（您的 GitHub Pages URL）
+   - `NEXT_PUBLIC_SITE_URL`（您的 GitHub Pages URL，如 `https://linwei94.github.io/PetSitter`）
 
 2. 推送到 `main` 分支，GitHub Actions 自动构建并部署
 
 3. 在 Settings → Pages 中选择 GitHub Actions 作为来源
-
-> **注意**: 如果部署在子路径（如 `username.github.io/PetSitter`），需要在 `next.config.mjs` 中取消注释并设置 `basePath`。
 
 ## 数据库 Schema
 
@@ -109,9 +113,10 @@ npm run build
 ## 后续计划
 
 - [ ] 狗狗服务（遛狗、寄养）
-- [ ] 微信/支付宝支付集成
+- [ ] 微信/支付宝/PayID 支付集成
 - [ ] 实时消息（Supabase Realtime）
-- [ ] 地图搜索（高德地图 API）
+- [ ] 地图搜索（Google Maps API）
 - [ ] 铲屎官服务报告（含多张照片）
 - [ ] 定期预订（每周固定上门）
 - [ ] 手机 App（React Native）
+- [ ] 扩展至墨尔本、布里斯班华人社区

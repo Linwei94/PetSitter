@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
-import { CITIES } from '@/lib/utils'
+import { SYDNEY_SUBURBS } from '@/lib/utils'
 
 export default function SettingsPage() {
   const supabase = createClient()
   const [saving, setSubmitting] = useState(false)
   const [form, setForm] = useState({
-    fullName: '', phone: '', wechatId: '', city: '上海', bio: '',
+    fullName: '', phone: '', wechatId: '', city: 'Chatswood', bio: '',
   })
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function SettingsPage() {
         fullName: data.full_name || '',
         phone: data.phone || '',
         wechatId: data.wechat_id || '',
-        city: data.city || '上海',
+        city: data.city || 'Chatswood',
         bio: data.bio || '',
       })
     }
@@ -73,9 +73,9 @@ export default function SettingsPage() {
                 className="input-field" placeholder="可选" />
             </div>
             <div>
-              <label className="label">所在城市</label>
+              <label className="label">所在区域 (Suburb)</label>
               <select value={form.city} onChange={e => update('city', e.target.value)} className="input-field">
-                {CITIES.map(c => <option key={c}>{c}</option>)}
+                {SYDNEY_SUBURBS.map(s => <option key={s}>{s}</option>)}
               </select>
             </div>
           </div>

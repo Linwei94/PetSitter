@@ -13,7 +13,7 @@ export function formatDate(date: string | Date, fmt = 'yyyy年M月d日') {
 }
 
 export function formatPrice(amount: number) {
-  return `¥${amount.toFixed(0)}`
+  return `A$${amount.toFixed(0)}`
 }
 
 export function calculateBookingDays(startDate: string, endDate: string) {
@@ -43,15 +43,13 @@ export function truncate(str: string, length: number) {
   return str.slice(0, length) + '...'
 }
 
-export const CITIES = [
-  '上海', '北京', '广州', '深圳', '杭州', '成都', '武汉', '南京', '西安', '苏州',
-  '厦门', '重庆', '天津', '长沙', '郑州', '青岛', '大连', '宁波', '无锡', '福州',
-]
+export const CITIES = ['悉尼']
 
-export const SHANGHAI_DISTRICTS = [
-  '浦东新区', '黄浦区', '静安区', '徐汇区', '长宁区', '普陀区',
-  '虹口区', '杨浦区', '闵行区', '宝山区', '嘉定区', '松江区',
-  '青浦区', '奉贤区', '金山区', '崇明区',
+export const SYDNEY_SUBURBS = [
+  'Chatswood', 'Hurstville', 'Burwood', 'Eastwood', 'Rhodes', 'Strathfield',
+  'Parramatta', 'Ashfield', 'Campsie', 'Kingsford', 'Randwick', 'Auburn',
+  'Blacktown', 'Haymarket', 'Kogarah', 'Rockdale', 'Lane Cove', 'North Sydney',
+  'Hornsby', 'Liverpool', 'Bankstown', 'Mascot', 'Zetland', 'Bondi', 'Surry Hills',
 ]
 
 export const CAT_BREEDS = [

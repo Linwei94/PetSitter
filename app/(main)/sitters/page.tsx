@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { SlidersHorizontal, MapPin, Search, X, ChevronDown } from 'lucide-react'
 import SitterCard from '@/components/sitters/SitterCard'
-import { CITIES } from '@/lib/utils'
+import { SYDNEY_SUBURBS } from '@/lib/utils'
 
 // Mock data for demonstration
 const ALL_SITTERS = [
@@ -13,14 +13,14 @@ const ALL_SITTERS = [
     name: '林晓雨',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
     title: '资深猫咪照护师 · 5年经验',
-    city: '上海',
-    district: '静安区',
+    city: '悉尼',
+    district: 'Chatswood',
     rating: 4.98,
     reviewCount: 127,
     completedBookings: 186,
     yearsExp: 5,
-    priceBoarding: 120,
-    priceFeeding: 60,
+    priceBoarding: 60,
+    priceFeeding: 30,
     services: ['cat_boarding', 'cat_home_feeding'],
     tags: ['有自家猫', '兽医助理', '绝育推荐'],
     coverPhoto: 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=500&h=350&fit=crop',
@@ -32,13 +32,13 @@ const ALL_SITTERS = [
     name: '王建辉',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
     title: '专职猫咪寄养 · 独立房间',
-    city: '上海',
-    district: '徐汇区',
+    city: '悉尼',
+    district: 'Hurstville',
     rating: 4.95,
     reviewCount: 89,
     completedBookings: 142,
     yearsExp: 10,
-    priceBoarding: 150,
+    priceBoarding: 75,
     priceFeeding: undefined,
     services: ['cat_boarding'],
     tags: ['独立房间', '安防摄像', '节假日不涨价'],
@@ -51,14 +51,14 @@ const ALL_SITTERS = [
     name: '张美玲',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop',
     title: '上门喂猫专家 · 动物医学在读',
-    city: '上海',
-    district: '浦东新区',
+    city: '悉尼',
+    district: 'Burwood',
     rating: 5.0,
     reviewCount: 64,
     completedBookings: 98,
     yearsExp: 3,
-    priceBoarding: 90,
-    priceFeeding: 50,
+    priceBoarding: 50,
+    priceFeeding: 25,
     services: ['cat_boarding', 'cat_home_feeding'],
     tags: ['每天视频', '可喂药', '宠物学专业'],
     coverPhoto: 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=500&h=350&fit=crop',
@@ -70,14 +70,14 @@ const ALL_SITTERS = [
     name: '陈思远',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop',
     title: '全职铲屎官 · 最多同时照顾4只',
-    city: '上海',
-    district: '长宁区',
+    city: '悉尼',
+    district: 'Eastwood',
     rating: 4.87,
     reviewCount: 52,
     completedBookings: 79,
     yearsExp: 4,
-    priceBoarding: 100,
-    priceFeeding: 55,
+    priceBoarding: 55,
+    priceFeeding: 28,
     services: ['cat_boarding', 'cat_home_feeding'],
     tags: ['可接老猫', '特殊需求', '大空间'],
     coverPhoto: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&h=350&fit=crop',
@@ -89,14 +89,14 @@ const ALL_SITTERS = [
     name: '刘艺婷',
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
     title: '上门喂猫 · 每天两次打卡',
-    city: '上海',
-    district: '普陀区',
+    city: '悉尼',
+    district: 'Rhodes',
     rating: 4.92,
     reviewCount: 73,
     completedBookings: 110,
     yearsExp: 2,
     priceBoarding: undefined,
-    priceFeeding: 45,
+    priceFeeding: 22,
     services: ['cat_home_feeding'],
     tags: ['两次上门', '猫砂清理', '拍照更新'],
     coverPhoto: 'https://images.unsplash.com/photo-1518791841217-8f162f1912da?w=500&h=350&fit=crop',
@@ -108,14 +108,14 @@ const ALL_SITTERS = [
     name: '赵小明',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
     title: '猫咪爱好者 · 家有两只猫',
-    city: '上海',
-    district: '虹口区',
+    city: '悉尼',
+    district: 'Strathfield',
     rating: 4.85,
     reviewCount: 38,
     completedBookings: 56,
     yearsExp: 2,
-    priceBoarding: 85,
-    priceFeeding: 48,
+    priceBoarding: 45,
+    priceFeeding: 24,
     services: ['cat_boarding', 'cat_home_feeding'],
     tags: ['有伴', '温馨环境', '实时汇报'],
     coverPhoto: 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=500&h=350&fit=crop',
@@ -139,7 +139,7 @@ function SittersContent() {
 
   // Filters
   const [service, setService] = useState(searchParams.get('service') || 'all')
-  const [city, setCity] = useState(searchParams.get('city') || '上海')
+  const [suburb, setSuburb] = useState(searchParams.get('suburb') || 'all')
   const [sortBy, setSortBy] = useState('rating')
   const [maxPrice, setMaxPrice] = useState(500)
   const [onlyVerified, setOnlyVerified] = useState(false)
@@ -147,7 +147,7 @@ function SittersContent() {
   const filteredSitters = ALL_SITTERS
     .filter(s => {
       if (service !== 'all' && !s.services.includes(service)) return false
-      if (s.city !== city) return false
+      if (suburb !== 'all' && s.district !== suburb) return false
       if (onlyVerified && !s.idVerified) return false
       const price = service === 'cat_home_feeding' ? s.priceFeeding : s.priceBoarding
       if (price && price > maxPrice) return false
@@ -195,15 +195,16 @@ function SittersContent() {
           ))}
         </div>
 
-        {/* City */}
+        {/* Suburb */}
         <div className="relative ml-auto">
           <MapPin size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <select
-            value={city}
-            onChange={e => setCity(e.target.value)}
-            className="input-field pl-8 py-2 text-sm w-32 appearance-none pr-7"
+            value={suburb}
+            onChange={e => setSuburb(e.target.value)}
+            className="input-field pl-8 py-2 text-sm w-40 appearance-none pr-7"
           >
-            {CITIES.slice(0, 10).map(c => <option key={c}>{c}</option>)}
+            <option value="all">全部区域</option>
+            {SYDNEY_SUBURBS.map(s => <option key={s}>{s}</option>)}
           </select>
           <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
         </div>
@@ -264,7 +265,7 @@ function SittersContent() {
       {/* Results header */}
       <div className="flex items-center justify-between mb-6">
         <p className="text-gray-600 text-sm">
-          在 <strong className="text-gray-900">{city}</strong> 找到{' '}
+          在 <strong className="text-gray-900">{suburb === 'all' ? '悉尼全区' : suburb}</strong> 找到{' '}
           <strong className="text-gray-900">{filteredSitters.length}</strong> 位铲屎官
         </p>
       </div>
@@ -280,7 +281,7 @@ function SittersContent() {
         <div className="text-center py-20">
           <div className="text-5xl mb-4">😿</div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">暂无符合条件的铲屎官</h3>
-          <p className="text-gray-500 text-sm">试试调整筛选条件或换个城市</p>
+          <p className="text-gray-500 text-sm">试试调整筛选条件或换个区域</p>
         </div>
       )}
     </div>
