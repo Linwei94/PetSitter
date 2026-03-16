@@ -4,8 +4,8 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
   // 如果部署到 /repo-name/ 而非根目录，取消注释并修改：
-  // basePath: '/PetSitter',
-  // assetPrefix: '/PetSitter/',
+  basePath: '/PetSitter',
+  assetPrefix: '/PetSitter/',
   images: {
     unoptimized: true, // GitHub Pages 不支持 Next.js Image Optimization
     remotePatterns: [
