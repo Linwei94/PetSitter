@@ -50,6 +50,7 @@ export interface Database {
           is_verified?: boolean
           updated_at?: string
         }
+        Relationships: []
       }
       sitters: {
         Row: {
@@ -136,6 +137,7 @@ export interface Database {
           is_active?: boolean
           updated_at?: string
         }
+        Relationships: []
       }
       sitter_services: {
         Row: {
@@ -181,6 +183,7 @@ export interface Database {
           included_services?: string[] | null
           notes?: string | null
         }
+        Relationships: []
       }
       sitter_photos: {
         Row: {
@@ -206,6 +209,7 @@ export interface Database {
           is_cover?: boolean
           sort_order?: number
         }
+        Relationships: []
       }
       sitter_availability: {
         Row: {
@@ -226,6 +230,7 @@ export interface Database {
           is_available?: boolean
           notes?: string | null
         }
+        Relationships: []
       }
       pets: {
         Row: {
@@ -297,6 +302,7 @@ export interface Database {
           emergency_vet?: string | null
           updated_at?: string
         }
+        Relationships: []
       }
       bookings: {
         Row: {
@@ -354,6 +360,7 @@ export interface Database {
           payment_at?: string | null
           updated_at?: string
         }
+        Relationships: []
       }
       reviews: {
         Row: {
@@ -384,6 +391,7 @@ export interface Database {
           is_visible?: boolean
           updated_at?: string
         }
+        Relationships: []
       }
       messages: {
         Row: {
@@ -408,6 +416,7 @@ export interface Database {
         Update: {
           is_read?: boolean
         }
+        Relationships: []
       }
       notifications: {
         Row: {
@@ -432,6 +441,7 @@ export interface Database {
         Update: {
           is_read?: boolean
         }
+        Relationships: []
       }
       favorites: {
         Row: {
@@ -446,11 +456,13 @@ export interface Database {
           sitter_id: string
         }
         Update: Record<string, never>
+        Relationships: []
       }
     }
     Views: Record<string, never>
     Functions: Record<string, never>
     Enums: Record<string, never>
+    CompositeTypes: Record<string, never>
   }
 }
 
