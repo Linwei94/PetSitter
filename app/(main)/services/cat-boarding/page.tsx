@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { CheckCircle2, Star, Shield, Camera, Clock, Heart } from 'lucide-react'
+import { CheckCircle2, Star, Shield, Camera, Clock, Heart, Home } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -15,8 +15,6 @@ const features = [
   { icon: Clock, title: '全天候关注', desc: '铲屎官全天在家，随时陪伴照顾您的猫咪' },
   { icon: Star, title: '真实评价', desc: '查看来自其他猫咪主人的真实评价，放心选择' },
 ]
-
-import { Home } from 'lucide-react'
 
 const faqs = [
   {
