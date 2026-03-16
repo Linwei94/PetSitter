@@ -39,7 +39,7 @@ export default function DashboardPage() {
     const load = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) return
-      const { data } = await supabase.from('profiles').select('full_name').eq('id', user.id).single()
+      const { data } = await supabase.from('profiles').select('full_name').eq('id', user.id).single() as { data: { full_name: string | null } | null, error: unknown }
       if (data?.full_name) setUserName(data.full_name)
     }
     load()
