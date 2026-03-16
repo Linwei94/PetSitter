@@ -39,7 +39,7 @@ export default function CatFeedingPage() {
               提供上门喂猫
             </Link>
           </div>
-          <p className="text-sm text-gray-500 mt-4">起价 ¥50/次 · 含30分钟陪伴</p>
+          <p className="text-sm text-gray-500 mt-4">起价 A$50/次 · 含30分钟陪伴</p>
         </div>
       </section>
 
@@ -101,7 +101,7 @@ export default function CatFeedingPage() {
             <div className="card p-6 border-2 border-teal-200">
               <div className="text-3xl mb-3">🌅</div>
               <h3 className="font-bold text-gray-900 text-lg mb-2">每天1次上门</h3>
-              <p className="text-3xl font-bold text-teal-700 mb-4">¥50<span className="text-base font-normal text-gray-500">/次起</span></p>
+              <p className="text-3xl font-bold text-teal-700 mb-4">A$50<span className="text-base font-normal text-gray-500">/次起</span></p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-teal-500" /> 约30-45分钟服务</li>
                 <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-teal-500" /> 喂食 + 换水 + 铲砂</li>
@@ -112,7 +112,7 @@ export default function CatFeedingPage() {
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full">推荐</div>
               <div className="text-3xl mb-3">🌅🌇</div>
               <h3 className="font-bold text-gray-900 text-lg mb-2">每天2次上门</h3>
-              <p className="text-3xl font-bold text-brand-700 mb-4">¥90<span className="text-base font-normal text-gray-500">/天起</span></p>
+              <p className="text-3xl font-bold text-brand-700 mb-4">A$90<span className="text-base font-normal text-gray-500">/天起</span></p>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-brand-500" /> 早晚各一次</li>
                 <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-brand-500" /> 更多陪伴时间</li>

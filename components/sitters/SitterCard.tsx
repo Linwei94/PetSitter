@@ -102,13 +102,13 @@ export default function SitterCard({ sitter }: { sitter: SitterCardData }) {
             {sitter.priceBoarding && (
               <div>
                 <p className="text-xs text-gray-400">寄养</p>
-                <p className="text-sm font-bold text-gray-900">¥{sitter.priceBoarding}<span className="text-xs font-normal text-gray-400">/晚</span></p>
+                <p className="text-sm font-bold text-gray-900">A${sitter.priceBoarding}<span className="text-xs font-normal text-gray-400">/晚</span></p>
               </div>
             )}
             {sitter.priceFeeding && (
               <div>
                 <p className="text-xs text-gray-400">上门</p>
-                <p className="text-sm font-bold text-gray-900">¥{sitter.priceFeeding}<span className="text-xs font-normal text-gray-400">/次</span></p>
+                <p className="text-sm font-bold text-gray-900">A${sitter.priceFeeding}<span className="text-xs font-normal text-gray-400">/次</span></p>
               </div>
             )}
           </div>

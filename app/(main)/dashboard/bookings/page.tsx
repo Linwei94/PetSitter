@@ -136,8 +136,8 @@ function BookingsList() {
                   </p>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <p className="font-bold text-lg text-gray-900">¥{b.amount}</p>
-                  <p className="text-xs text-gray-400">含服务费 ¥{b.platformFee}</p>
+                  <p className="font-bold text-lg text-gray-900">A${b.amount}</p>
+                  <p className="text-xs text-gray-400">含服务费 A${b.platformFee}</p>
                 </div>
               </div>
 

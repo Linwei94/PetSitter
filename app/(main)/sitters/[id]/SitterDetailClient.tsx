@@ -98,6 +98,13 @@ export default function SitterDetailClient({ id }: { id: string }) {
   const [numCats, setNumCats] = useState(1)
   const [isFavorited, setIsFavorited] = useState(false)
 
+  const today = new Date().toISOString().split('T')[0]
+
+  const handleStartDateChange = (v: string) => {
+    setStartDate(v)
+    if (endDate && endDate < v) setEndDate(v)
+  }
+
   const calculatePrice = () => {
     const price = selectedService === 'cat_boarding' ? sitter.priceBoarding : sitter.priceFeeding
     if (!price || !startDate || !endDate) return null
@@ -125,7 +132,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Left */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-6 order-2 lg:order-1">
             {/* Photo Gallery */}
             <div className="card overflow-hidden">
               <div className="relative h-72 sm:h-96">
@@ -273,7 +280,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
           </div>
 
           {/* Right: Booking Panel */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 order-1 lg:order-2">
             <div className="sticky top-20">
               <div className="card p-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-5">预订服务</h3>
@@ -292,7 +299,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
                             onChange={() => setSelectedService('cat_boarding')} className="accent-brand-500" />
                           <span className="text-sm font-medium">🏠 猫咪寄养</span>
                         </div>
-                        <span className="text-sm font-bold text-brand-600">¥{sitter.priceBoarding}/晚</span>
+                        <span className="text-sm font-bold text-brand-600">A${sitter.priceBoarding}/晚</span>
                       </label>
                     )}
                     {sitter.services.includes('cat_home_feeding') && (
@@ -305,7 +312,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
                             onChange={() => setSelectedService('cat_home_feeding')} className="accent-brand-500" />
                           <span className="text-sm font-medium">🚪 上门喂猫</span>
                         </div>
-                        <span className="text-sm font-bold text-brand-600">¥{sitter.priceFeeding}/次</span>
+                        <span className="text-sm font-bold text-brand-600">A${sitter.priceFeeding}/次</span>
                       </label>
                     )}
                   </div>
@@ -315,13 +322,18 @@ export default function SitterDetailClient({ id }: { id: string }) {
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   <div>
                     <label className="label text-xs">开始日期</label>
-                    <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)}
-                      min={new Date().toISOString().split('T')[0]} className="input-field text-sm py-2.5" />
+                    <input type="date" value={startDate}
+                      onChange={e => handleStartDateChange(e.target.value)}
+                      min={today} className="input-field text-sm py-2.5" />
                   </div>
                   <div>
                     <label className="label text-xs">结束日期</label>
-                    <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)}
-                      min={startDate} className="input-field text-sm py-2.5" />
+                    <input type="date" value={endDate}
+                      onChange={e => { if (!startDate || e.target.value >= startDate) setEndDate(e.target.value) }}
+                      min={startDate || today}
+                      disabled={!startDate}
+                      className={`input-field text-sm py-2.5 ${!startDate ? 'opacity-60 cursor-not-allowed' : ''}`} />
+                    {!startDate && <p className="text-xs text-gray-400 mt-0.5">先选开始日期</p>}
                   </div>
                 </div>
 
@@ -336,7 +348,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
                       className="w-9 h-9 rounded-xl border border-gray-200 flex items-center justify-center font-bold hover:bg-gray-50">+</button>
                     <span className="text-xs text-gray-400">最多{sitter.maxCats}只</span>
                   </div>
-                  {numCats > 1 && <p className="text-xs text-gray-400 mt-1">每只额外猫咪 +¥{sitter.additionalCatPrice}/晚</p>}
+                  {numCats > 1 && <p className="text-xs text-gray-400 mt-1">每只额外猫咪 +A${sitter.additionalCatPrice}/晚</p>}
                 </div>
 
                 {/* Price */}
@@ -344,7 +356,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
                   <div className="bg-brand-50 rounded-xl p-4 mb-4">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600">预计费用</span>
-                      <span className="font-bold text-brand-600 text-xl">¥{price}</span>
+                      <span className="font-bold text-brand-600 text-xl">A${price}</span>
                     </div>
                     <p className="text-xs text-gray-400 mt-1">最终价格在确认预订时确定</p>
                   </div>

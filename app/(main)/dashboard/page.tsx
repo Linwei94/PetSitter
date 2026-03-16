@@ -123,7 +123,7 @@ export default function DashboardPage() {
                   {b.service} · {b.startDate} → {b.endDate} · {b.petNames.join('、')}
                 </p>
               </div>
-              <p className="font-bold text-gray-900 text-sm flex-shrink-0">¥{b.amount}</p>
+              <p className="font-bold text-gray-900 text-sm flex-shrink-0">A${b.amount}</p>
             </Link>
           ))}
         </div>
