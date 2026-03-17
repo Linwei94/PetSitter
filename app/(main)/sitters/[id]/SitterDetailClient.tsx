@@ -180,14 +180,14 @@ export default function SitterDetailClient({ id }: { id: string }) {
                   className="w-full h-full object-cover" />
                 <div className="absolute top-4 right-4 flex gap-2">
                   <button onClick={() => setIsFavorited(!isFavorited)}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-colors ${
+                    className={`w-11 h-11 rounded-full flex items-center justify-center shadow-lg transition-colors ${
                       isFavorited ? 'bg-red-500 text-white' : 'bg-white text-gray-600'
                     }`}>
                     <Heart size={18} fill={isFavorited ? 'currentColor' : 'none'} />
                   </button>
                   <button
                     onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('链接已复制！') }}
-                    className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-gray-600">
+                    className="w-11 h-11 bg-white rounded-full flex items-center justify-center shadow-lg text-gray-600">
                     <Share2 size={18} />
                   </button>
                 </div>
@@ -323,7 +323,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
 
           {/* Right: Booking Panel */}
           <div className="md:col-span-1 order-1 md:order-2">
-            <div className="sticky top-20">
+            <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto rounded-2xl">
               <div className="card p-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-5">预订服务</h3>
 
@@ -372,7 +372,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
                         value={startDate}
                         onChange={e => handleStartDateChange(e.target.value)}
                         min={today}
-                        className="input-field text-sm py-2 px-2 w-full"
+                        className="input-field text-base py-2.5 px-3 w-full"
                       />
                     </div>
                     <div>
@@ -385,7 +385,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
                         onChange={e => handleEndDateChange(e.target.value)}
                         min={minEndDate}
                         disabled={!startDate}
-                        className={`input-field text-sm py-2 px-2 w-full ${!startDate ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`input-field text-base py-2.5 px-3 w-full ${!startDate ? 'opacity-50 cursor-not-allowed' : ''}`}
                       />
                     </div>
                   </div>

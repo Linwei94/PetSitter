@@ -70,13 +70,13 @@ export default function HowItWorks() {
             <h3 className="text-xl font-bold text-gray-900">我是猫咪主人</h3>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8">
             {ownerSteps.map((step, i) => (
               <div key={step.step} className="relative">
                 {i < ownerSteps.length - 1 && (
                   <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-brand-100 z-0" style={{ width: 'calc(100% - 2rem)' }} />
                 )}
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-md transition-shadow relative z-10">
+                <div className="bg-white rounded-2xl p-6 xl:p-7 border border-gray-100 hover:shadow-md transition-shadow relative z-10">
                   <div className="text-3xl mb-3">{step.icon}</div>
                   <div className="text-xs font-bold text-brand-400 mb-1">STEP {step.step}</div>
                   <h4 className="font-bold text-gray-900 mb-2">{step.title}</h4>
@@ -96,9 +96,9 @@ export default function HowItWorks() {
             <h3 className="text-xl font-bold text-gray-900">我想成为铲屎官</h3>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8">
             {sitterSteps.map((step) => (
-              <div key={step.step} className="bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-md transition-shadow">
+              <div key={step.step} className="bg-white rounded-2xl p-6 xl:p-7 border border-gray-100 hover:shadow-md transition-shadow">
                 <div className="text-3xl mb-3">{step.icon}</div>
                 <div className="text-xs font-bold text-teal-500 mb-1">STEP {step.step}</div>
                 <h4 className="font-bold text-gray-900 mb-2">{step.title}</h4>

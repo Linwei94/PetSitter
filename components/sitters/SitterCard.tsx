@@ -25,7 +25,7 @@ export default function SitterCard({ sitter }: { sitter: SitterCardData }) {
   return (
     <Link href={`/sitters/${sitter.id}`} className="group card-hover block">
       {/* Cover */}
-      <div className="relative h-44 overflow-hidden">
+      <div className="relative h-44 md:h-48 lg:h-52 overflow-hidden">
         <img
           src={sitter.coverPhoto}
           alt={`${sitter.name}的照片`}
@@ -43,7 +43,7 @@ export default function SitterCard({ sitter }: { sitter: SitterCardData }) {
         {/* Favorite button */}
         <button
           onClick={e => { e.preventDefault(); e.stopPropagation() }}
-          className="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-sm"
+          className="absolute top-3 right-3 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors shadow-sm"
         >
           <Heart size={15} className="text-gray-400 hover:text-red-400" />
         </button>

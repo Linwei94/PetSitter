@@ -68,7 +68,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 xl:gap-6">
         {stats.map(s => (
           <div key={s.label} className="card p-4 flex items-center gap-3">
             <div className={`w-10 h-10 ${s.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
@@ -85,7 +85,7 @@ export default function DashboardPage() {
       {/* Quick actions */}
       <div className="card p-5">
         <h2 className="font-bold text-gray-900 mb-4">快速操作</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 xl:gap-4">
           {[
             { href: '/sitters?service=cat_boarding', icon: '🏠', label: '找寄养铲屎官' },
             { href: '/sitters?service=cat_home_feeding', icon: '🚪', label: '找上门铲屎官' },

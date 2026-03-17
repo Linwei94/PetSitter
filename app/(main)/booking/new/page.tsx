@@ -260,7 +260,7 @@ function BookingNewContent() {
 
           {/* Sidebar: summary */}
           <div className="md:col-span-1 order-1 md:order-2">
-            <div className="card p-5 sticky top-20">
+            <div className="card p-5 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto">
               <h3 className="font-bold text-gray-900 mb-4 text-sm">预订摘要</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">

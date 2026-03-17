@@ -207,12 +207,12 @@ function SittersContent() {
         </div>
 
         {/* Suburb */}
-        <div className="relative ml-auto">
+        <div className="relative flex-1 min-w-[120px]">
           <MapPin size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <select
             value={suburb}
             onChange={e => setSuburb(e.target.value)}
-            className="input-field pl-8 py-2 text-sm w-36 md:w-44 appearance-none pr-7"
+            className="input-field pl-8 py-2 text-sm w-full appearance-none pr-7"
           >
             <option value="all">全部区域</option>
             {SYDNEY_SUBURBS.map(s => <option key={s}>{s}</option>)}
@@ -221,11 +221,11 @@ function SittersContent() {
         </div>
 
         {/* Sort */}
-        <div className="relative">
+        <div className="relative flex-1 min-w-[110px]">
           <select
             value={sortBy}
             onChange={e => setSortBy(e.target.value)}
-            className="input-field py-2 text-sm w-32 md:w-40 appearance-none pr-7"
+            className="input-field py-2 text-sm w-full appearance-none pr-7"
           >
             {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
@@ -283,7 +283,7 @@ function SittersContent() {
 
       {/* Grid */}
       {filteredSitters.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredSitters.map(sitter => (
             <SitterCard key={sitter.id} sitter={sitter} />
           ))}

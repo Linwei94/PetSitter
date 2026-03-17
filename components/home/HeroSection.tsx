@@ -44,7 +44,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-[88vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[75vh] sm:min-h-[88vh] flex items-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 hero-gradient" />
       <div className="absolute inset-0 opacity-[0.03]"
@@ -65,7 +65,7 @@ export default function HeroSection() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4">
             让专业的人
             <br />
             <span className="text-brand-500">守护您的猫咪</span>
@@ -106,7 +106,7 @@ export default function HeroSection() {
                   <select
                     value={suburb}
                     onChange={e => setSuburb(e.target.value)}
-                    className="input-field pl-9 text-sm appearance-none pr-8"
+                    className="input-field pl-9 text-base appearance-none pr-8"
                   >
                     {SYDNEY_SUBURBS.map(s => (
                       <option key={s} value={s}>{s}</option>
@@ -126,7 +126,7 @@ export default function HeroSection() {
                     value={startDate}
                     onChange={e => handleStartDateChange(e.target.value)}
                     min={today}
-                    className="input-field pl-9 text-sm"
+                    className="input-field pl-9 text-base"
                   />
                 </div>
               </div>
@@ -141,7 +141,7 @@ export default function HeroSection() {
                     value={endDate}
                     onChange={e => handleEndDateChange(e.target.value)}
                     min={startDate || today}
-                    className={`input-field pl-9 text-sm ${!startDate ? 'opacity-60 cursor-not-allowed' : ''}`}
+                    className={`input-field pl-9 text-base ${!startDate ? 'opacity-60 cursor-not-allowed' : ''}`}
                     disabled={!startDate}
                   />
                 </div>

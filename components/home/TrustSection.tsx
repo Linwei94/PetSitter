@@ -42,7 +42,7 @@ export default function TrustSection() {
             {stats.map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="text-3xl mb-2">{stat.icon}</div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-1">{stat.value}</div>
+                <div className="text-3xl md:text-4xl xl:text-5xl font-bold text-white mb-1">{stat.value}</div>
                 <div className="text-orange-100 text-sm">{stat.label}</div>
               </div>
             ))}
@@ -58,7 +58,7 @@ export default function TrustSection() {
             <p className="section-subtitle">真实铲屎官，真实评价</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 xl:gap-12">
             {reviews.map((review, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-brand-100">
                 {/* Stars */}
@@ -69,7 +69,7 @@ export default function TrustSection() {
                   <span className="ml-2 text-xs text-gray-500">{review.date} · {review.service}</span>
                 </div>
 
-                <p className="text-gray-700 text-sm leading-relaxed mb-5">
+                <p className="text-gray-700 text-sm leading-relaxed mb-5 lg:max-w-sm">
                   &ldquo;{review.text}&rdquo;
                 </p>
 

@@ -85,11 +85,11 @@ export default function FeaturedSitters() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {MOCK_SITTERS.map((sitter) => (
             <Link key={sitter.id} href={`/sitters/${sitter.id}`} className="group card-hover">
               {/* Cover photo */}
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-48 lg:h-56 xl:h-64 overflow-hidden">
                 <img
                   src={sitter.photo}
                   alt={`${sitter.name}的照片`}

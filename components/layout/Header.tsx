@@ -167,7 +167,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+              className="md:hidden p-2.5 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
             >
               {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>

@@ -43,7 +43,7 @@ export default function ServiceCards() {
           <p className="section-subtitle">根据您和猫咪的需求选择最合适的方式</p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-10 xl:gap-16 max-w-5xl lg:max-w-6xl mx-auto">
           {services.map((service) => (
             <Link key={service.id} href={service.href} className="group block">
               <div className={`card h-full border-2 ${service.borderColor} hover:shadow-2xl hover:-translate-y-2 transition-all duration-300`}>
