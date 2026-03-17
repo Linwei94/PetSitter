@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 const stats = [
   { value: '5,000+', label: '认证铲屎官', icon: '👤' },
   { value: '50,000+', label: '成功预订', icon: '📅' },
@@ -99,12 +101,12 @@ export default function TrustSection() {
             加入5万+信任我们的猫咪主人
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/sitters" className="bg-white text-teal-700 font-bold py-3.5 px-8 rounded-xl hover:bg-gray-50 transition-colors">
+            <Link href="/sitters" className="bg-white text-teal-700 font-bold py-3.5 px-8 rounded-xl hover:bg-gray-50 transition-colors">
               立即找铲屎官
-            </a>
-            <a href="/sitters/become" className="border-2 border-white text-white font-bold py-3.5 px-8 rounded-xl hover:bg-white/10 transition-colors">
+            </Link>
+            <Link href="/sitters/become" className="border-2 border-white text-white font-bold py-3.5 px-8 rounded-xl hover:bg-white/10 transition-colors">
               成为铲屎官
-            </a>
+            </Link>
           </div>
         </div>
       </section>

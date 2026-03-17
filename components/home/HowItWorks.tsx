@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 const ownerSteps = [
   {
     step: '01',
@@ -108,10 +110,10 @@ export default function HowItWorks() {
           </div>
 
           <div className="mt-8 text-center">
-            <a href="/sitters/become"
+            <Link href="/sitters/become"
               className="btn-teal inline-flex">
               立即成为铲屎官，开始赚钱 →
-            </a>
+            </Link>
           </div>
         </div>
       </div>
