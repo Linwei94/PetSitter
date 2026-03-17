@@ -53,6 +53,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     loadUser()
   }, [])
 
+  useEffect(() => {
+    if (pathname === '/dashboard/messages') setUnreadMessages(0)
+  }, [pathname])
+
   const handleSignOut = async () => {
     await supabase.auth.signOut()
     router.push('/')
