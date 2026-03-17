@@ -170,9 +170,9 @@ export default function SitterDetailClient({ id }: { id: string }) {
           <ChevronLeft size={16} /> 返回搜索
         </button>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {/* Left */}
-          <div className="lg:col-span-2 space-y-6 order-2 lg:order-1">
+          <div className="md:col-span-2 space-y-6 order-2 md:order-1">
             {/* Photo Gallery */}
             <div className="card overflow-hidden">
               <div className="relative h-72 sm:h-96">
@@ -322,7 +322,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
           </div>
 
           {/* Right: Booking Panel */}
-          <div className="lg:col-span-1 order-1 lg:order-2">
+          <div className="md:col-span-1 order-1 md:order-2">
             <div className="sticky top-20">
               <div className="card p-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-5">预订服务</h3>

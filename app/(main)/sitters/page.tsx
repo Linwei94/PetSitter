@@ -212,7 +212,7 @@ function SittersContent() {
           <select
             value={suburb}
             onChange={e => setSuburb(e.target.value)}
-            className="input-field pl-8 py-2 text-sm w-40 appearance-none pr-7"
+            className="input-field pl-8 py-2 text-sm w-36 md:w-44 appearance-none pr-7"
           >
             <option value="all">全部区域</option>
             {SYDNEY_SUBURBS.map(s => <option key={s}>{s}</option>)}
@@ -225,7 +225,7 @@ function SittersContent() {
           <select
             value={sortBy}
             onChange={e => setSortBy(e.target.value)}
-            className="input-field py-2 text-sm w-36 appearance-none pr-7"
+            className="input-field py-2 text-sm w-32 md:w-40 appearance-none pr-7"
           >
             {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>

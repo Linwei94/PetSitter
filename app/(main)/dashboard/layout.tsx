@@ -63,10 +63,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 lg:pb-8">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Sidebar — desktop only */}
-          <div className="lg:col-span-1 hidden lg:block">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
+        <div className="grid md:grid-cols-4 gap-6 lg:gap-8">
+          {/* Sidebar — tablet and desktop */}
+          <div className="md:col-span-1 hidden md:block">
             <div className="card p-5 mb-4 sticky top-20">
               <div className="flex items-center gap-3 mb-4 pb-4 border-b border-gray-100">
                 <div className="w-12 h-12 bg-brand-500 rounded-2xl flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
@@ -107,14 +107,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
 
           {/* Main content */}
-          <div className="lg:col-span-3">
+          <div className="md:col-span-3">
             {children}
           </div>
         </div>
       </div>
 
       {/* Mobile bottom navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40 safe-area-inset-bottom">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40 safe-area-inset-bottom">
         <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
           {bottomNavItems.map(item => {
             const active = item.exact ? pathname === item.href : pathname.startsWith(item.href)

@@ -52,8 +52,8 @@ export default function HeroSection() {
       />
 
       {/* Floating decorations — hidden on small screens to avoid overflow */}
-      <div className="absolute top-1/4 right-8 lg:right-24 text-6xl lg:text-8xl animate-bounce hidden sm:block" style={{ animationDuration: '3s' }}>🐱</div>
-      <div className="absolute bottom-1/3 right-16 lg:right-48 text-4xl tag-animate opacity-60 hidden sm:block">🐾</div>
+      <div className="absolute top-1/4 right-8 md:right-16 lg:right-24 text-6xl md:text-7xl lg:text-8xl animate-bounce hidden sm:block" style={{ animationDuration: '3s' }}>🐱</div>
+      <div className="absolute bottom-1/3 right-12 md:right-24 lg:right-48 text-4xl tag-animate opacity-60 hidden sm:block">🐾</div>
       <div className="absolute top-1/3 right-1/3 text-3xl tag-animate opacity-40 hidden sm:block" style={{ animationDelay: '1s' }}>✨</div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 w-full">
