@@ -44,6 +44,7 @@ export default function MessagesPage() {
   // Mobile: show list (true) or chat (false)
   const [mobileShowList, setMobileShowList] = useState(true)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const activeConv = conversations.find(c => c.id === activeId)!
@@ -52,9 +53,10 @@ export default function MessagesPage() {
     c.sitterName.includes(search) || c.lastMessage.includes(search)
   )
 
-  // Auto-scroll to bottom when messages change or conversation switches
+  // Auto-scroll to bottom within the messages container only (not the page)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    const container = messagesContainerRef.current
+    if (container) container.scrollTop = container.scrollHeight
   }, [activeConv?.messages, activeId])
 
   // Clear unread on open
@@ -197,7 +199,7 @@ export default function MessagesPage() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-3">
               {activeConv.messages.map((msg, idx) => {
                 const showTime = idx === 0 || activeConv.messages[idx - 1].isMe !== msg.isMe
                 return (
