@@ -95,6 +95,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
   const [selectedService, setSelectedService] = useState(sitter.services[0])
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [dateError, setDateError] = useState('')
   const [numCats, setNumCats] = useState(1)
   const [isFavorited, setIsFavorited] = useState(false)
 
@@ -102,7 +103,30 @@ export default function SitterDetailClient({ id }: { id: string }) {
 
   const handleStartDateChange = (v: string) => {
     setStartDate(v)
-    if (endDate && endDate < v) setEndDate(v)
+    setDateError('')
+    if (endDate && endDate < v) {
+      setEndDate('')
+      setDateError('结束日期已重置，请重新选择')
+    }
+  }
+
+  const handleEndDateChange = (v: string) => {
+    if (!startDate) {
+      setDateError('请先选择开始日期')
+      return
+    }
+    if (v < startDate) {
+      setDateError('结束日期不能早于开始日期')
+      setEndDate('')
+      return
+    }
+    if (v === startDate && selectedService === 'cat_boarding') {
+      setDateError('寄养结束日期需要晚于开始日期（至少住1晚）')
+      setEndDate('')
+      return
+    }
+    setDateError('')
+    setEndDate(v)
   }
 
   const calculatePrice = () => {
@@ -116,11 +140,27 @@ export default function SitterDetailClient({ id }: { id: string }) {
   }
 
   const handleBooking = () => {
-    if (!startDate || !endDate) { toast.error('请选择服务日期'); return }
+    if (!startDate) { toast.error('请选择开始日期'); return }
+    if (!endDate) { toast.error('请选择结束日期'); return }
+    if (endDate < startDate) { toast.error('结束日期不能早于开始日期'); return }
+    if (selectedService === 'cat_boarding' && endDate === startDate) {
+      toast.error('寄养至少需要1晚，请选择不同的日期')
+      return
+    }
     router.push(`/booking/new?sitter=${sitter.id}&service=${selectedService}&start=${startDate}&end=${endDate}&cats=${numCats}`)
   }
 
   const price = calculatePrice()
+
+  const minEndDate = (() => {
+    if (!startDate) return today
+    if (selectedService === 'cat_boarding') {
+      const d = new Date(startDate)
+      d.setDate(d.getDate() + 1)
+      return d.toISOString().split('T')[0]
+    }
+    return startDate
+  })()
 
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
@@ -190,7 +230,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
                 </div>
               </div>
 
-              <div className="grid grid-cols-4 gap-4 mt-6 pt-6 border-t border-gray-100">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-6 border-t border-gray-100">
                 {[
                   { val: sitter.rating, label: '平均评分' },
                   { val: sitter.reviewCount, label: '用户评价' },
@@ -319,22 +359,50 @@ export default function SitterDetailClient({ id }: { id: string }) {
                 </div>
 
                 {/* Dates */}
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  <div>
-                    <label className="label text-xs">开始日期</label>
-                    <input type="date" value={startDate}
-                      onChange={e => handleStartDateChange(e.target.value)}
-                      min={today} className="input-field text-sm py-2.5" />
+                <div className="space-y-3 mb-2">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="label text-xs">
+                        开始日期 <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        value={startDate}
+                        onChange={e => handleStartDateChange(e.target.value)}
+                        min={today}
+                        className="input-field text-sm py-2 px-2 w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="label text-xs">
+                        结束日期 <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        type="date"
+                        value={endDate}
+                        onChange={e => handleEndDateChange(e.target.value)}
+                        min={minEndDate}
+                        disabled={!startDate}
+                        className={`input-field text-sm py-2 px-2 w-full ${!startDate ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="label text-xs">结束日期</label>
-                    <input type="date" value={endDate}
-                      onChange={e => { if (!startDate || e.target.value >= startDate) setEndDate(e.target.value) }}
-                      min={startDate || today}
-                      disabled={!startDate}
-                      className={`input-field text-sm py-2.5 ${!startDate ? 'opacity-60 cursor-not-allowed' : ''}`} />
-                    {!startDate && <p className="text-xs text-gray-400 mt-0.5">先选开始日期</p>}
-                  </div>
+                  {!startDate && (
+                    <p className="text-xs text-gray-400">请先选择开始日期</p>
+                  )}
+                  {dateError && (
+                    <div className="flex items-start gap-1.5 text-xs text-red-600 bg-red-50 rounded-lg px-3 py-2">
+                      <span className="flex-shrink-0 mt-0.5">⚠️</span>
+                      <span>{dateError}</span>
+                    </div>
+                  )}
+                  {startDate && endDate && !dateError && (
+                    <p className="text-xs text-green-600 bg-green-50 rounded-lg px-3 py-2">
+                      ✓ {selectedService === 'cat_boarding'
+                        ? `共 ${Math.round((new Date(endDate).getTime() - new Date(startDate).getTime()) / 86400000)} 晚`
+                        : `${startDate} 上门服务`}
+                    </p>
+                  )}
                 </div>
 
                 {/* Num cats */}

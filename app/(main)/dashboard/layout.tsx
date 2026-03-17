@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { LayoutDashboard, Calendar, Heart, MessageSquare, Settings, ChevronRight, LogOut, Cat } from 'lucide-react'
@@ -31,7 +31,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [userName, setUserName] = useState('用户')
   const [userEmail, setUserEmail] = useState('')
   const [unreadMessages, setUnreadMessages] = useState(2)
-  const supabase = createClient()
+  const supabaseRef = useRef(createClient())
+  const supabase = supabaseRef.current
 
   useEffect(() => {
     const loadUser = async () => {

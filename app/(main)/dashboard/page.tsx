@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Calendar, Heart, Star, MessageSquare, TrendingUp, PlusCircle, ArrowRight } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
@@ -33,7 +33,8 @@ const STATUS_LABEL: Record<string, string> = {
 
 export default function DashboardPage() {
   const [userName, setUserName] = useState('用户')
-  const supabase = createClient()
+  const supabaseRef = useRef(createClient())
+  const supabase = supabaseRef.current
 
   useEffect(() => {
     const load = async () => {

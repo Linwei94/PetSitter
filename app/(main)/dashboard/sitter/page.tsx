@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import {
@@ -37,7 +37,8 @@ const MOCK_PENDING = [
 
 export default function SitterDashboardPage() {
   const router = useRouter()
-  const supabase = createClient()
+  const supabaseRef = useRef(createClient())
+  const supabase = supabaseRef.current
   const [hasSitterProfile, setHasSitterProfile] = useState<boolean | null>(null)
   const [services, setServices] = useState([
     { type: 'cat_boarding', label: '猫咪寄养', price: 60, isActive: true, icon: '🏠' },
