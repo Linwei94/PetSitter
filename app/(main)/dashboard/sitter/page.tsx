@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import {
   TrendingUp, Calendar, Star, DollarSign, CheckCircle2, AlertCircle,
-  Plus, Edit2, ToggleLeft, ToggleRight
+  Plus, Edit2, ToggleLeft, ToggleRight, Shield, ShieldCheck, ShieldAlert
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
@@ -44,6 +44,7 @@ export default function SitterDashboardPage() {
     { type: 'cat_boarding', label: '猫咪寄养', price: 60, isActive: true, icon: '🏠' },
     { type: 'cat_home_feeding', label: '上门喂猫', price: 30, isActive: true, icon: '🚪' },
   ])
+  const [verificationStatus, setVerificationStatus] = useState<'pending' | 'approved' | 'rejected' | null>(null)
 
   useEffect(() => {
     const check = async () => {
@@ -56,6 +57,15 @@ export default function SitterDashboardPage() {
         }
         const { data } = await supabase.from('sitters').select('id').eq('user_id', user.id).single()
         setHasSitterProfile(!!data)
+        // Load verification status
+        const { data: sub } = await supabase
+          .from('id_verification_submissions')
+          .select('status')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single()
+        if (sub) setVerificationStatus(sub.status as 'pending' | 'approved' | 'rejected')
       } catch {
         setHasSitterProfile(false)
       }
@@ -128,6 +138,50 @@ export default function SitterDashboardPage() {
           </p>
         </div>
       )}
+
+      {/* Identity Verification Card */}
+      <div className={`card p-4 flex items-center gap-4 border ${
+        verificationStatus === 'approved' ? 'bg-green-50 border-green-200' :
+        verificationStatus === 'rejected' ? 'bg-red-50 border-red-200' :
+        verificationStatus === 'pending' ? 'bg-yellow-50 border-yellow-200' :
+        'bg-gray-50 border-gray-200'
+      }`}>
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+          verificationStatus === 'approved' ? 'bg-green-100' :
+          verificationStatus === 'rejected' ? 'bg-red-100' :
+          verificationStatus === 'pending' ? 'bg-yellow-100' :
+          'bg-gray-100'
+        }`}>
+          {verificationStatus === 'approved'
+            ? <ShieldCheck size={20} className="text-green-600" />
+            : verificationStatus === 'rejected'
+            ? <ShieldAlert size={20} className="text-red-600" />
+            : <Shield size={20} className={verificationStatus === 'pending' ? 'text-yellow-600' : 'text-gray-400'} />
+          }
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-sm text-gray-900">
+            {verificationStatus === 'approved' ? '身份认证已通过 ✓'
+             : verificationStatus === 'rejected' ? '身份认证未通过'
+             : verificationStatus === 'pending' ? '身份认证审核中'
+             : '完成身份认证'}
+          </p>
+          <p className="text-xs text-gray-500 mt-0.5">
+            {verificationStatus === 'approved' ? '铲屎官档案显示已认证徽章'
+             : verificationStatus === 'rejected' ? '请重新提交证件材料'
+             : verificationStatus === 'pending' ? '通常1-3个工作日完成审核'
+             : '提交澳洲100分证件，获得认证徽章'}
+          </p>
+        </div>
+        {verificationStatus !== 'approved' && (
+          <Link
+            href="/dashboard/sitter/verification"
+            className="text-xs font-medium text-brand-600 hover:text-brand-700 flex-shrink-0"
+          >
+            {verificationStatus === 'rejected' ? '重新提交 →' : verificationStatus === 'pending' ? '查看详情 →' : '立即认证 →'}
+          </Link>
+        )}
+      </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
