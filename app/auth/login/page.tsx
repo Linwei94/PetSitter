@@ -73,9 +73,9 @@ export default function LoginPage() {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="label mb-0">密码</label>
-                <Link href="/auth/forgot-password" className="text-xs text-brand-600 hover:text-brand-700">
+                <button type="button" onClick={() => toast('密码重置功能即将上线，请联系客服')} className="text-xs text-brand-600 hover:text-brand-700">
                   忘记密码？
-                </Link>
+                </button>
               </div>
               <div className="relative">
                 <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />

@@ -88,11 +88,10 @@ export default function PetsPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Link href={`/dashboard/pets/edit/${pet.id}`}
-                    onClick={e => e.stopPropagation()}
+                  <button onClick={e => { e.stopPropagation(); toast('编辑功能即将上线') }}
                     className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
                     <Edit2 size={15} />
-                  </Link>
+                  </button>
                   <button onClick={e => {
                     e.stopPropagation()
                     if (!window.confirm(`确认删除 ${pet.name} 的档案？此操作不可恢复。`)) return

@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import { MapPin, Phone, Mail, MessageCircle } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 const serviceLinks = [
   { label: '上门喂猫', href: '/services/cat-feeding' },
@@ -8,20 +11,15 @@ const serviceLinks = [
   { label: '成为铲屎官', href: '/sitters/become' },
 ]
 
-const helpLinks = [
-  { label: '常见问题', href: '/help/faq' },
-  { label: '服务保障', href: '/help/guarantee' },
-  { label: '预订指南', href: '/help/booking-guide' },
-  { label: '取消政策', href: '/help/cancellation' },
-]
-
-const legalLinks = [
-  { label: '隐私政策', href: '/legal/privacy' },
-  { label: '服务条款', href: '/legal/terms' },
-  { label: '关于我们', href: '/about' },
-]
-
 export default function Footer() {
+  const handleComingSoon = () => {
+    toast('功能即将上线', { icon: '🔔' })
+  }
+
+  const handleAbout = () => {
+    toast('关于我们页面即将上线', { icon: '🔔' })
+  }
+
   return (
     <footer className="bg-gray-900 text-gray-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -35,7 +33,7 @@ export default function Footer() {
               <span className="text-xl font-bold text-white">喵管家</span>
             </div>
             <p className="text-sm leading-relaxed mb-6">
-              中国领先的猫咪专业护理平台。5000+ 认证铲屎官，守护您的猫咪。
+              悉尼华人社区专属猫咪护理平台。500+ 认证铲屎官，守护您的猫咪。
             </p>
             <div className="space-y-2.5">
               <div className="flex items-center gap-2.5 text-sm">
@@ -44,7 +42,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2.5 text-sm">
                 <Phone size={15} className="text-brand-400 flex-shrink-0" />
-                <span>400-888-0000（9:00-21:00）</span>
+                <span>0400-888-000（9:00-21:00）</span>
               </div>
               <div className="flex items-center gap-2.5 text-sm">
                 <Mail size={15} className="text-brand-400 flex-shrink-0" />
@@ -72,12 +70,18 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">帮助中心</h3>
             <ul className="space-y-2.5">
-              {helpLinks.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href}
-                    className="text-sm hover:text-white transition-colors">
-                    {link.label}
-                  </Link>
+              {[
+                '常见问题',
+                '服务保障',
+                '预订指南',
+                '取消政策',
+              ].map((label) => (
+                <li key={label}>
+                  <button
+                    onClick={handleComingSoon}
+                    className="text-sm hover:text-white transition-colors text-left">
+                    {label}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -110,19 +114,22 @@ export default function Footer() {
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm">
-            © 2024 喵管家 版权所有 ·{' '}
-            <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener noreferrer"
-              className="hover:text-white transition-colors">
-              沪ICP备XXXXXXXX号
-            </a>
+            © 2024 喵管家 版权所有 · 悉尼，澳大利亚
           </p>
           <div className="flex items-center gap-6">
-            {legalLinks.map((link) => (
-              <Link key={link.href} href={link.href}
-                className="text-sm hover:text-white transition-colors">
-                {link.label}
-              </Link>
-            ))}
+            <Link href="/legal/privacy"
+              className="text-sm hover:text-white transition-colors">
+              隐私政策
+            </Link>
+            <Link href="/legal/terms"
+              className="text-sm hover:text-white transition-colors">
+              服务条款
+            </Link>
+            <button
+              onClick={handleAbout}
+              className="text-sm hover:text-white transition-colors">
+              关于我们
+            </button>
           </div>
         </div>
       </div>

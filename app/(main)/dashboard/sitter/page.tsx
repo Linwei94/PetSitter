@@ -114,9 +114,9 @@ export default function SitterDashboardPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-900">铲屎官中心</h1>
-        <Link href="/sitters/1" className="text-sm text-brand-600 hover:text-brand-700">
+        <button onClick={() => toast('请先完善您的铲屎官档案')} className="text-sm text-brand-600 hover:text-brand-700">
           查看我的主页 →
-        </Link>
+        </button>
       </div>
 
       {/* Pending requests alert */}

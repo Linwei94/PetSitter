@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { Send, Search, ArrowLeft, Phone, MoreVertical } from 'lucide-react'
+import toast from 'react-hot-toast'
 
 type Message = { id: string; senderId: string; text: string; time: string; isMe: boolean }
 type Conversation = {
@@ -186,10 +187,10 @@ export default function MessagesPage() {
                 <p className="text-xs text-gray-400">铲屎官 · 预订 #{activeConv.bookingId}</p>
               </div>
               <div className="flex items-center gap-1 flex-shrink-0">
-                <button className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
+                <button onClick={() => toast('语音通话功能即将上线')} className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
                   <Phone size={16} />
                 </button>
-                <button className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
+                <button onClick={() => toast('更多功能即将上线')} className="p-2 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
                   <MoreVertical size={16} />
                 </button>
               </div>

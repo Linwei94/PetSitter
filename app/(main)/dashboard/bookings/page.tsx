@@ -152,7 +152,7 @@ function BookingsList() {
               {/* Actions */}
               <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-gray-100">
                 {b.status === 'completed' && !b.reviewed && (
-                  <button className="flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-lg transition-colors">
+                  <button onClick={() => toast('评价功能即将上线 ⭐')} className="flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 px-3 py-1.5 rounded-lg transition-colors">
                     <Star size={14} /> 写评价
                   </button>
                 )}
@@ -163,7 +163,7 @@ function BookingsList() {
                   </Link>
                 )}
                 {b.status === 'completed' && (
-                  <Link href={`/sitters/1`}
+                  <Link href={`/sitters`}
                     className="flex items-center gap-1.5 text-sm font-medium text-teal-600 hover:text-teal-700 bg-teal-50 hover:bg-teal-100 px-3 py-1.5 rounded-lg transition-colors">
                     <RefreshCw size={14} /> 再次预订
                   </Link>
