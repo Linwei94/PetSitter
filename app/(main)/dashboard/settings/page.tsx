@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
 import { SYDNEY_SUBURBS } from '@/lib/utils'
 
 export default function SettingsPage() {
-  const supabase = createClient()
+  const supabaseRef = useRef(createClient())
+  const supabase = supabaseRef.current
   const [saving, setSubmitting] = useState(false)
   const [form, setForm] = useState({
     fullName: '', phone: '', wechatId: '', city: 'Chatswood', bio: '',
@@ -65,7 +66,7 @@ export default function SettingsPage() {
             <div>
               <label className="label">手机号码</label>
               <input value={form.phone} onChange={e => update('phone', e.target.value)}
-                className="input-field" placeholder="13800138000" />
+                className="input-field" placeholder="04XX XXX XXX" />
             </div>
             <div>
               <label className="label">微信号</label>

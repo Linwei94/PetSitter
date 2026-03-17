@@ -37,11 +37,16 @@ function BookingNewContent() {
   const [paymentMethod, setPaymentMethod] = useState('payid')
   const [submitting, setSubmitting] = useState(false)
 
-  const days = Math.max(1, (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24))
+  const daysRaw = startDate && endDate
+    ? (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24)
+    : 0
+  const days = Math.max(1, isNaN(daysRaw) ? 1 : daysRaw)
   const basePrice = service === 'cat_boarding' ? sitter.priceBoarding : sitter.priceFeeding
-  const totalPrice = service === 'cat_boarding'
-    ? Math.round(basePrice * days + (numCats - 1) * sitter.additionalCatPrice * days)
-    : basePrice
+  const totalPrice = basePrice
+    ? (service === 'cat_boarding'
+        ? Math.round(basePrice * days + (numCats - 1) * sitter.additionalCatPrice * days)
+        : basePrice)
+    : 0
   const platformFee = Math.round(totalPrice * 0.1)
   const finalTotal = totalPrice
 

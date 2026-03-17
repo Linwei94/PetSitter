@@ -70,7 +70,7 @@ export default function TrustSection() {
                 </div>
 
                 <p className="text-gray-700 text-sm leading-relaxed mb-5">
-                  "{review.text}"
+                  &ldquo;{review.text}&rdquo;
                 </p>
 
                 <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
