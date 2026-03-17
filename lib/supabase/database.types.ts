@@ -21,6 +21,7 @@ export interface Database {
           bio: string | null
           is_sitter: boolean
           is_verified: boolean
+          is_admin: boolean
           created_at: string
           updated_at: string
         }
@@ -35,6 +36,7 @@ export interface Database {
           bio?: string | null
           is_sitter?: boolean
           is_verified?: boolean
+          is_admin?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -48,6 +50,7 @@ export interface Database {
           bio?: string | null
           is_sitter?: boolean
           is_verified?: boolean
+          is_admin?: boolean
           updated_at?: string
         }
         Relationships: []
@@ -456,6 +459,42 @@ export interface Database {
           sitter_id: string
         }
         Update: Record<string, never>
+        Relationships: []
+      }
+      id_verification_submissions: {
+        Row: {
+          id: string
+          user_id: string
+          status: 'pending' | 'approved' | 'rejected'
+          total_points: number
+          documents: Json
+          photo_urls: Json
+          admin_note: string | null
+          reviewed_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          status?: 'pending' | 'approved' | 'rejected'
+          total_points: number
+          documents: Json
+          photo_urls?: Json
+          admin_note?: string | null
+          reviewed_by?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          status?: 'pending' | 'approved' | 'rejected'
+          total_points?: number
+          documents?: Json
+          photo_urls?: Json
+          admin_note?: string | null
+          reviewed_by?: string | null
+          updated_at?: string
+        }
         Relationships: []
       }
     }
