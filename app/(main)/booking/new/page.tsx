@@ -6,17 +6,12 @@ import Link from 'next/link'
 import { ChevronLeft, Plus, CheckCircle2, CreditCard, Shield } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
+import { MOCK_SITTER_MAP } from '@/lib/mock-data'
 
 const MOCK_PETS = [
   { id: 'p1', name: '胖虎', breed: '英国短毛猫', age: '3岁', gender: '公（已绝育）', photo: '🐱' },
   { id: 'p2', name: '小橘', breed: '中华田园猫', age: '1岁', gender: '母（已绝育）', photo: '🧡' },
 ]
-
-const SITTER_INFO: Record<string, any> = {
-  '1': { name: '林晓雨', priceBoarding: 60, priceFeeding: 30, additionalCatPrice: 20 },
-  '2': { name: '王建辉', priceBoarding: 75, priceFeeding: undefined, additionalCatPrice: 25 },
-  '3': { name: '张美玲', priceBoarding: 50, priceFeeding: 25, additionalCatPrice: 18 },
-}
 
 function BookingNewContent() {
   const searchParams = useSearchParams()
@@ -28,7 +23,7 @@ function BookingNewContent() {
   const endDate = searchParams.get('end') || ''
   const numCats = Number(searchParams.get('cats') || 1)
 
-  const sitter = SITTER_INFO[sitterId] || SITTER_INFO['1']
+  const sitter = MOCK_SITTER_MAP[sitterId] || MOCK_SITTER_MAP['1']
 
   const [step, setStep] = useState<'pets' | 'details' | 'confirm'>('pets')
   const [selectedPets, setSelectedPets] = useState<string[]>([])
@@ -48,7 +43,7 @@ function BookingNewContent() {
         : basePrice)
     : 0
   const platformFee = Math.round(totalPrice * 0.1)
-  const finalTotal = totalPrice
+  const finalTotal = totalPrice + platformFee
 
   const togglePet = (petId: string) => {
     setSelectedPets(prev =>
@@ -141,9 +136,9 @@ function BookingNewContent() {
                   ))}
                 </div>
 
-                <Link href="/dashboard/pets/add"
+                <Link href="/dashboard/pets/add" target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm text-brand-600 hover:text-brand-700 border border-brand-200 rounded-xl px-4 py-3 hover:bg-brand-50 transition-colors mb-6">
-                  <Plus size={16} /> 添加新猫咪档案
+                  <Plus size={16} /> 添加新猫咪档案（新标签页打开）
                 </Link>
 
                 <button

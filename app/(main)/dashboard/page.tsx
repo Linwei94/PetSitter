@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Calendar, Heart, Star, MessageSquare, TrendingUp, PlusCircle, ArrowRight } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import toast from 'react-hot-toast'
 
 const MOCK_RECENT_BOOKINGS = [
   {
@@ -110,8 +111,8 @@ export default function DashboardPage() {
         </div>
         <div className="space-y-3">
           {MOCK_RECENT_BOOKINGS.map(b => (
-            <Link key={b.id} href={`/dashboard/bookings/${b.id}`}
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100">
+            <div key={b.id}
+              className="flex items-center gap-4 p-4 rounded-xl border border-gray-100">
               <div className="w-10 h-10 bg-brand-100 rounded-xl flex items-center justify-center text-brand-600 font-bold flex-shrink-0">
                 {b.service === '猫咪寄养' ? '🏠' : '🚪'}
               </div>
@@ -125,7 +126,12 @@ export default function DashboardPage() {
                 </p>
               </div>
               <p className="font-bold text-gray-900 text-sm flex-shrink-0">A${b.amount}</p>
-            </Link>
+              <button
+                onClick={() => toast('预订详情功能即将上线 🚀', { icon: '📋' })}
+                className="text-xs text-brand-600 hover:text-brand-700 px-2 py-1 rounded-lg hover:bg-brand-50 transition-colors flex-shrink-0">
+                详情
+              </button>
+            </div>
           ))}
         </div>
       </div>

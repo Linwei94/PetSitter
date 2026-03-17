@@ -68,7 +68,7 @@ export default function Header() {
             </div>
             <span className={cn(
               'text-xl font-bold transition-colors',
-              scrolled || !isHomePage ? 'text-gray-900' : 'text-gray-900'
+              scrolled || !isHomePage ? 'text-gray-900' : 'text-white'
             )}>
               喵管家
             </span>
@@ -84,7 +84,9 @@ export default function Header() {
                   'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
                   pathname === link.href
                     ? 'bg-brand-50 text-brand-600'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    : scrolled || !isHomePage
+                      ? 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      : 'text-white/90 hover:text-white hover:bg-white/10'
                 )}
               >
                 {link.label}
@@ -92,7 +94,12 @@ export default function Header() {
             ))}
             <Link
               href="/sitters/become"
-              className="ml-2 px-4 py-2 rounded-lg text-sm font-medium text-teal-700 hover:bg-teal-50 transition-colors"
+              className={cn(
+                'ml-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                scrolled || !isHomePage
+                  ? 'text-teal-700 hover:bg-teal-50'
+                  : 'text-white/90 hover:text-white hover:bg-white/10'
+              )}
             >
               成为铲屎官
             </Link>
@@ -170,7 +177,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
+        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg z-50 relative">
           <div className="px-4 py-3 space-y-1">
             {navLinks.map((link) => (
               <Link
@@ -205,6 +212,11 @@ export default function Header() {
             </div>
           )}
         </div>
+      )}
+
+      {/* Overlay for mobile menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40" onClick={() => setMobileMenuOpen(false)} />
       )}
 
       {/* Overlay for user menu */}

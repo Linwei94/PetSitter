@@ -185,7 +185,9 @@ export default function SitterDetailClient({ id }: { id: string }) {
                     }`}>
                     <Heart size={18} fill={isFavorited ? 'currentColor' : 'none'} />
                   </button>
-                  <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-gray-600">
+                  <button
+                    onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('链接已复制！') }}
+                    className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-gray-600">
                     <Share2 size={18} />
                   </button>
                 </div>
@@ -433,7 +435,7 @@ export default function SitterDetailClient({ id }: { id: string }) {
                 <button onClick={handleBooking} className="btn-primary w-full py-3.5 text-base mb-3">
                   <CalendarDays size={18} /> 立即预订
                 </button>
-                <button className="btn-secondary w-full py-3 text-sm">
+                <button onClick={() => router.push('/dashboard/messages')} className="btn-secondary w-full py-3 text-sm">
                   <MessageSquare size={16} /> 先发消息沟通
                 </button>
 

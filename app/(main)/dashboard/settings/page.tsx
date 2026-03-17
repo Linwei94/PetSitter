@@ -8,7 +8,7 @@ import { SYDNEY_SUBURBS } from '@/lib/utils'
 export default function SettingsPage() {
   const supabaseRef = useRef(createClient())
   const supabase = supabaseRef.current
-  const [saving, setSubmitting] = useState(false)
+  const [saving, setSaving] = useState(false)
   const [form, setForm] = useState({
     fullName: '', phone: '', wechatId: '', city: 'Chatswood', bio: '',
   })
@@ -33,7 +33,7 @@ export default function SettingsPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitting(true)
+    setSaving(true)
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { toast.error('请先登录'); return }
 
@@ -48,7 +48,7 @@ export default function SettingsPage() {
 
     if (error) toast.error('保存失败，请重试')
     else toast.success('设置已保存')
-    setSubmitting(false)
+    setSaving(false)
   }
 
   return (

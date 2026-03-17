@@ -140,9 +140,20 @@ function SittersContent() {
   // Filters
   const [service, setService] = useState(searchParams.get('service') || 'all')
   const [suburb, setSuburb] = useState(searchParams.get('suburb') || 'all')
-  const [sortBy, setSortBy] = useState('rating')
-  const [maxPrice, setMaxPrice] = useState(500)
-  const [onlyVerified, setOnlyVerified] = useState(false)
+  const [sortBy, setSortBy] = useState(searchParams.get('sort') || 'rating')
+  const [maxPrice, setMaxPrice] = useState(Number(searchParams.get('maxPrice') || 500))
+  const [onlyVerified, setOnlyVerified] = useState(searchParams.get('verified') === 'true')
+
+  useEffect(() => {
+    const params = new URLSearchParams()
+    if (service !== 'all') params.set('service', service)
+    if (suburb !== 'all') params.set('suburb', suburb)
+    if (sortBy !== 'rating') params.set('sort', sortBy)
+    if (maxPrice !== 500) params.set('maxPrice', String(maxPrice))
+    if (onlyVerified) params.set('verified', 'true')
+    const query = params.toString()
+    router.replace(query ? `/sitters?${query}` : '/sitters', { scroll: false })
+  }, [service, suburb, sortBy, maxPrice, onlyVerified])
 
   const filteredSitters = ALL_SITTERS
     .filter(s => {
